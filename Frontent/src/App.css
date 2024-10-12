@@ -1,0 +1,21 @@
+/* LowerHeader.css or inline <style> in your component file */
+.scrollbar-hide {
+  scrollbar-width: thin; /* "auto" or "thin" */
+}
+
+  /* src/components/TopHeader/ marquee*/
+.marquee-container {
+  animation: scroll-right 10s linear infinite; /* Change to scroll-right */
+}
+@keyframes scroll-right {
+  0% {
+    transform: translateX(100%); /* Start from the right */
+  }
+  50% {
+    transform: translateX(0); /* Center */
+  }
+  100% {
+    transform: translateX(-100%); /* Exit to the left */
+  }
+}
+
