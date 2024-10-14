@@ -1,45 +1,58 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
 import { BsGithub } from "react-icons/bs";
 import MidHeader from "./MidHeader";
 import LowerHeader from "./LowerHeader";
 import Products from "./Products";
 import Company from "../Company";
+
 function TopHead() {
   return (
     <>
       <div className="">
-    <div className="w-full h-[55px] border-b border-gray-400 flex justify-center items-center bg-black text-white">
-        <div className="h-full flex justify-center items-center">
-            <h2 className=" marquee-container  text-xs sm:text-sm md:text-base uppercase">
-                <span className=" font-semibold text-pink-400 m-[4px]">Free Shipping</span>
-                This Week Order Over - ₹2.5lakh
-            </h2>
+        {/* Top Announcement Bar */}
+        <div className="w-full h-[45px] bg-gradient-to-r from-pink-500 to-purple-500 flex justify-center items-center text-white">
+          <h2 className="marquee-container text-xs sm:text-sm md:text-base uppercase tracking-wide">
+            <span className="font-semibold text-yellow-300 mr-2">Free Shipping:</span>
+            This Week Only – Orders Over ₹2.5 Lakh!
+          </h2>
         </div>
-    </div>
 
-    <div className="w-full h-[115px] sm:h-[95px] border-b border-gray-400 flex flex-col sm:flex-row justify-center sm:justify-evenly items-center">
-        <div className=" w-full sm:w-[40%] md:w-[20%] pl-1.5 flex items-center justify-center sm:justify-start">
-            <h1 className="font-black text-base sm:text-lg md:text-3xl text-pink-600">VendorMart</h1>
-        </div>
-        <form className="w-full sm:w-[60%]  flex justify-center items-center mt-4 sm:mt-0">
-            <input className="w-[80%] sm:w-[60%] h-[40px] border-pink-400 border-0 border-b-2 outline-none" type="text" id="input" placeholder="Enter Product Name..." />
-            <FaSearch className="cursor-pointer ml-2 hover:text-pink-600" />
-        </form>
+        {/* Main Header Section */}
+        <div className="w-full py-4 sm:py-6 border-b border-gray-300 flex flex-col sm:flex-row justify-between items-center bg-gray-50 px-4 sm:px-8 md:px-12">
+          {/* Logo Section */}
+          <div className="flex items-center justify-center sm:justify-start w-full sm:w-1/3">
+            <h1 className="text-pink-600 font-bold text-xl md:text-3xl">
+              VendorMart
+            </h1>
+          </div>
 
-        <div className="w-full sm:w-[20%] flex justify-center sm:justify-evenly items-center mt-4 sm:mt-0">
-            <FaUser className="cursor-pointer mx-2 sm:mx-0 hover:text-pink-600" />
-            <FaShoppingCart className="cursor-pointer mx-2 sm:mx-0 hover:text-pink-600" />
-            <BsGithub className="cursor-pointer mx-2 sm:mx-0 hover:text-pink-600"/>
+          {/* Search Bar */}
+          <form className="flex items-center w-full sm:w-1/2 md:w-1/3 mt-4 sm:mt-0">
+            <input
+              className="w-[80%] sm:w-full px-4 py-2 border-b-2 border-pink-400 outline-none text-sm md:text-base bg-transparent"
+              type="text"
+              placeholder="Search for Products..."
+            />
+            <FaSearch className="ml-3 text-xl text-gray-600 cursor-pointer hover:text-pink-600 transition-colors duration-200" />
+          </form>
+
+          {/* User, Cart, and GitHub Icons */}
+          <div className="flex items-center justify-center sm:justify-end w-full sm:w-1/3 mt-4 sm:mt-0 space-x-4 text-lg text-gray-600">
+            <FaUser className="cursor-pointer hover:text-pink-600 transition-colors duration-200" />
+            <FaShoppingCart className="cursor-pointer hover:text-pink-600 transition-colors duration-200" />
+            <BsGithub className="cursor-pointer hover:text-pink-600 transition-colors duration-200" />
+          </div>
         </div>
-    </div>
-</div>
-<MidHeader/>
-<LowerHeader/>
-<Products/>
-<Company/>
+      </div>
+
+      {/* Navigation Sections */}
+      <MidHeader />
+      <LowerHeader />
+
+      {/* Main Content */}
+      <Products />
+      <Company />
     </>
   );
 }
