@@ -1,6 +1,15 @@
 /* LowerHeader.css or inline <style> in your component file */
-.scrollbar-hide {
-  scrollbar-width: thin; /* "auto" or "thin" */
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
   /* src/components/TopHeader/ marquee*/

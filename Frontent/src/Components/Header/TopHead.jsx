@@ -5,6 +5,8 @@ import MidHeader from "./MidHeader";
 import LowerHeader from "./LowerHeader";
 import Products from "./Products";
 import Company from "../Company";
+import Charity from "../Footer/Charity";
+import Footer from "../Footer/Footer";
 
 function TopHead() {
   return (
@@ -53,6 +55,11 @@ function TopHead() {
       {/* Main Content */}
       <Products />
       <Company />
+
+{/* footer section */}
+<Charity />
+<Footer />
+
     </>
   );
 }

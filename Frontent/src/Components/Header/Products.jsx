@@ -51,10 +51,10 @@ function Products() {
             {/* Responsive Grid: Stack on mobile, horizontal on larger screens */}
             <div className="flex flex-wrap sm:flex-nowrap justify-evenly w-full h-auto sm:h-[200px] items-center">
               {list.map((item, index) => (
-                <div key={index} className="flex flex-col items-center mb-4 sm:mb-0">
+                <div key={index} className="flex flex-col items-center mb-4 sm:mb-0 ">
                   {/* Adjust the size for mobile using responsive classes */}
                   <span
-                    className="h-[100px] w-[120px] sm:h-[135px] sm:w-[170px] flex justify-center items-center bg-white rounded-2xl"
+                    className="h-[100px] w-[120px] sm:h-[135px] sm:w-[170px] flex justify-center items-center bg-white rounded-2xl cursor-pointer "
                     style={{ backgroundColor: item.Color }}
                   >
                     <img

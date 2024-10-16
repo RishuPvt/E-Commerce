@@ -59,7 +59,7 @@ function Company() {
                 <div key={index} className="flex flex-col items-center mb-4 sm:mb-0">
                   {/* Adjust the size for mobile using responsive classes */}
                   <span
-                    className="h-[100px] w-[120px] sm:h-[135px] sm:w-[170px] flex justify-center items-center bg-white border border-gray-300 rounded-2xl"
+                    className="h-[100px] w-[120px] sm:h-[135px] sm:w-[170px] flex justify-center items-center bg-white border border-gray-300 rounded-2xl cursor-pointer"
                     style={{ backgroundColor: item.Color }}
                   >
                     <img
