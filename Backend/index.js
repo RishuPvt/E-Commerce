@@ -3,9 +3,7 @@ import {app} from "./App.js";
 import connectDB from "./src/DB/DataBase.js"
 
 // Load environment variables
-dotenv.config({
-    path: './.env'  // The path to the .env file which contains environment variables
-})
+dotenv.config({ path: './.env' });
 
 
 connectDB().then(()=>{

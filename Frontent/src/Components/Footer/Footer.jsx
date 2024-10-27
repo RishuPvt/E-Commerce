@@ -46,7 +46,7 @@ const Footer = () => {
               placeholder="Sign Up for updates" 
               className="p-2 rounded w-full mb-2 text-gray-800"
             />
-            <button className="bg-blue-600 text-white p-2 w-full rounded">SIGN UP</button>
+            <button className="bg-gradient-to-r from-pink-500 to-purple-500 text-white p-2 w-full rounded">SIGN UP</button>
           </form>
           <div className="flex space-x-4">
             <a href="https://linkedin.com" className="hover:text-white">LinkedIn</a>

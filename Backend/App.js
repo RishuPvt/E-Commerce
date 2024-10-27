@@ -1,15 +1,33 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import { upload } from "./src/Middleware/Multer.Middleware.js";
+const app = express();
 
-
-const app=express();
 
 // Enabling CORS
-app.use(cors({
+app.use(
+  cors({
     origin: process.env.CORS_ORIGIN, // Allowing only the specified origin to access resources
-    credentials: true // Allowing cookies and other credentials to be sent in cross-origin requests
-}))
+    credentials: true, // Allowing cookies and other credentials to be sent in cross-origin requests
+  })
+);
 
+// Middleware to parse JSON payloads with a size limit of 16kb
+app.use(express.json({ limit: "16kb" }));
+
+// Middleware to parse URL-encoded payloads with a size limit of 16kb
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+
+// Middleware to serve static files from the "public" directory
+app.use(express.static("public"));
+
+// Middleware to parse cookies attached to the client request object
+app.use(cookieParser());
+
+import userRouter from "./src/Routes/user.route.js";
+
+app.use("/api/v1/users", upload.single("avatar"), userRouter);
 
 // Exporting the app instance for use in other parts of the application
-export { app }
+export { app };

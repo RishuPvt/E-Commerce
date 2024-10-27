@@ -1,0 +1,9 @@
+first write index.js file .
+then write App.js file.
+made database connections .
+create models .
+made utils - apierror , apiresponse , asynchandler , cloudinary 
+Middleware 
+Controllers 
+auth middliware before logout user
+Routes
