@@ -24,10 +24,7 @@ function Charity() {
         {/* Icons Section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 bg-gradient-to-r from-blue-400 to-teal-400 p-8 rounded-xl shadow-xl mb-12">
           {list.map((item, index) => (
-            <div
-              className="flex flex-col items-center text-center"
-              key={index}
-            >
+            <div className="flex flex-col items-center text-center" key={index}>
               <img
                 className="w-20 h-20 md:w-28 md:h-28 mb-4"
                 src={item.name}

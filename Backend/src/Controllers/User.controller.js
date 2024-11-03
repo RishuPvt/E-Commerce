@@ -146,29 +146,167 @@ const logoutUser = asyncHandler(async (req, res) => {
     await user.save();
 
     const options = {
-      httpOnly: true, 
-      secure: true, 
-      sameSite: "strict", 
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
     };
 
     return res
-      .status(200) 
-      .clearCookie("accessToken", options) 
-      .clearCookie("refreshToken", options) 
+      .status(200)
+      .clearCookie("accessToken", options)
+      .clearCookie("refreshToken", options)
       .json(
         new ApiResponse(
           200,
-          { id: user._id, 
-            phone: user.phone, 
-            email: user.email 
-          },
+          { id: user._id, phone: user.phone, email: user.email },
           "User logged out successfully"
         )
-      ); 
+      );
   } catch (error) {
     // console.error("Logout error:", error); // Log the error for debugging
     throw new ApiError(500, "Error while logging out user");
   }
 });
 
-export { registerUser, loginUser, logoutUser };
+// Function to changeCurrentPassword of user
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+  // Find the user by ID
+  // Check if the old password is correct
+  // Throw error if the old password is incorrect
+  // Update the password and save the user without validation
+  // Send success response
+  const { oldPassword, newPassword } = req.body;
+
+  const user = await User.findById(req.user?._id);
+
+  const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
+
+  if (!isPasswordCorrect) {
+    throw new ApiError(400, "Invalid old password");
+  }
+
+  user.password = newPassword;
+  await user.save({ validateBeforeSave: false });
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { newPassword: user.password },
+        "Password changed successfully"
+      )
+    );
+});
+
+// Handler to get the current logged-in user
+const getCurrentUser = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "User fetched successfully"));
+});
+
+// Handler to update account details (full name and email)
+const updateAccountDetails = asyncHandler(async (req, res) => {
+  const { fullName, email, phone, address } = req.body;
+
+  if (!fullName && !email && !phone && !address) {
+    // Throw error if required fields are missing
+    throw new ApiError(400, "All fields are required");
+  }
+
+  // Find the user by ID and update full name and email
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        fullName,
+        email,
+        phone,
+        address,
+      },
+    },
+    { new: true } // Return the updated user
+  ).select("-password"); // Exclude password from the result
+
+  // Send success response with updated user details
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "Account details updated successfully"));
+});
+
+// Handler to update user avatar
+const updateUserAvatar = asyncHandler(async (req, res) => {
+  // Throw error if avatar file is missing
+  // Delete old avatar image from Cloudinary
+  // Get the user from the database
+  // Extract the public ID from the existing avatar URL
+  //Use the cloudinary.uploader.destroy() method, passing the public ID of the old image to delete it.
+  // Upload new avatar to Cloudinary
+  // Throw error if Cloudinary upload fails
+  // Update user with new avatar URL
+  // Send success response with updated user details
+
+  const avatarLocalPath = req.file?.path;
+
+  if (!avatarLocalPath) {
+    throw new ApiError(400, "avatar file is missing");
+  }
+
+  const userAvtarDelete = await User.findById(req.user?._id);
+
+  if (userAvtarDelete.avatar) {
+    const publicId = userAvtarDelete.avatar.split("/").pop().split(".")[0];
+    await cloudinary.uploader.destroy(publicId, (error, result) => {
+      if (error) {
+        throw new ApiError(500, "Error while deleting old avatar");
+      }
+    });
+  }
+
+  const avatar = await uploadOnCloudinary(avatarLocalPath);
+  if (!avatar.url) {
+    throw new ApiError(400, "Error while uploading avatar");
+  }
+  const user = await User.findByIdAndUpdate(
+    req.user?._id,
+    {
+      $set: {
+        avatar: avatar.url,
+      },
+    },
+    { new: true }
+  ).select("-password");
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "Avatar image updated successfully"));
+});
+const refreshAccessToken = asyncHandler(async (req, res) => {
+  // Get the incoming refresh token either from cookies or from the request body
+  // If no refresh token is provided, throw a 401 Unauthorized error
+  // Verify the incoming refresh token using JWT and the secret key from the environment variables
+  // Find the user in the database using the decoded token's user ID
+  // If no user is found, throw a 401 Unauthorized error
+  // Check if the incoming refresh token matches the user's stored refresh token
+  // If the tokens don't match, throw a 401 error indicating that the token is expired or has already been used
+  // Set options for cookie security (httpOnly and secure for security purposes)
+  // Generate new access and refresh tokens for the user
+  // Return the new access token and refresh token in both cookies and JSON response
+
+  
+});
+//  Handler to user addToCart
+//  Handler to user removeFromCart
+//  Handler to user getCartItems
+//  Handler to user clearCart
+//  Handler to user getOrderHistory
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  changeCurrentPassword,
+  getCurrentUser,
+  updateAccountDetails,
+  updateUserAvatar,
+};

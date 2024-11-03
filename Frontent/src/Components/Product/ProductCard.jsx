@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 const ProductCard = ({ product }) => {
   return (
     <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-xl">
@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
         <img
           className="w-full h-48 object-cover"
           src={product.image}
-        //   alt={product.name}
+          //   alt={product.name}
         />
       </div>
       <div className="p-4">
@@ -44,9 +44,7 @@ const ProductCard = ({ product }) => {
           Add to Cart
         </button>
       </div>
-
     </div>
-    
   );
 };
 

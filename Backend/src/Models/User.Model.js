@@ -33,7 +33,7 @@ const userSchema = new Schema(
     },
 
     cart: {
-      type: Array, //
+      type: Array, 
       default: [],
     },
     password: {

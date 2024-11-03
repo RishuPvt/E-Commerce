@@ -1,20 +1,13 @@
-import React from 'react'
-import './App.css'
-import ProfileRouter from './Components/Route/Routes'
+import React from "react";
+import "./App.css";
+import ProfileRouter from "./Components/Route/Routes";
 
 function App() {
-  
   return (
     <>
-  
-<ProfileRouter />
- 
-
-
-    
-    
+      <ProfileRouter />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

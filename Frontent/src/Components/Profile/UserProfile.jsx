@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaUserEdit, FaShoppingBag } from 'react-icons/fa';
+import React from "react";
+import { FaUserEdit, FaShoppingBag, FaSignOutAlt, FaKey } from "react-icons/fa";
 import TopHead from "../Header/TopHead";
 import MidHeader from "../Header/MidHeader";
 
@@ -24,32 +24,63 @@ const UserProfile = ({ user }) => {
           </div>
 
           <div className="md:w-3/4 md:pl-10">
-            <h2 className="text-4xl font-bold text-gray-800 mb-2">{user.fullName}</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-2">
+              {user.fullName}
+            </h2>
             <p className="text-gray-500 text-lg">@{user.username}</p>
             <div className="mt-6 text-gray-700 space-y-3">
-              <p><span className="font-semibold text-blue-700">Address:</span> {user.address}</p>
-              <p><span className="font-semibold text-blue-700">Email:</span> {user.email}</p>
+              <p>
+                <span className="font-semibold text-blue-700">Address:</span>{" "}
+                {user.address}
+              </p>
+              <p>
+                <span className="font-semibold text-blue-700">Email:</span>{" "}
+                {user.email}
+              </p>
+            </div>
+            
+            {/* Change Password and Logout Buttons */}
+            <div className="flex space-x-4 mt-8">
+              <button className="px-5 py-2 bg-red-500 text-white rounded-full font-medium shadow-md hover:bg-red-600 transition duration-200 flex items-center">
+                <FaSignOutAlt className="mr-2" /> Logout
+              </button>
+              <button className="px-5 py-2 bg-yellow-500 text-white rounded-full font-medium shadow-md hover:bg-yellow-600 transition duration-200 flex items-center">
+                <FaKey className="mr-2" /> Change Password
+              </button>
             </div>
           </div>
         </div>
 
         {/* Shopping History Section */}
         <div className="bg-white shadow-lg rounded-lg p-8 transition-transform duration-300 hover:scale-105">
-          <h3 className="text-3xl font-semibold text-gray-800 mb-6">Shopping History</h3>
+          <h3 className="text-3xl font-semibold text-gray-800 mb-6">
+            Shopping History
+          </h3>
           {user.shoppingHistory.length === 0 ? (
             <p className="text-gray-700 text-lg">No purchases yet.</p>
           ) : (
             <div className="space-y-6">
               {user.shoppingHistory.map((order, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div
+                  key={index}
+                  className="border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow duration-200"
+                >
                   <div className="flex justify-between items-center">
                     <div>
-                      <h4 className="text-xl font-semibold text-gray-800">{order.productName}</h4>
-                      <p className="text-gray-500 text-sm">Order Date: {order.date}</p>
+                      <h4 className="text-xl font-semibold text-gray-800">
+                        {order.productName}
+                      </h4>
+                      <p className="text-gray-500 text-sm">
+                        Order Date: {order.date}
+                      </p>
                     </div>
-                    <span className="text-green-600 font-bold text-lg">${order.price.toFixed(2)}</span>
+                    <span className="text-green-600 font-bold text-lg">
+                      ${order.price.toFixed(2)}
+                    </span>
                   </div>
-                  <p className="text-gray-500 mt-2">Quantity: {order.quantity}</p>
+                  <p className="text-gray-500 mt-2">
+                    Quantity: {order.quantity}
+                  </p>
                 </div>
               ))}
             </div>
@@ -69,9 +100,24 @@ const App = () => {
     address: "1234 Street, KnowledgePark, GN",
     email: "Rishuraj@example.com",
     shoppingHistory: [
-      { productName: "Wireless Headphones", price: 49.99, date: "2024-09-15", quantity: 1 },
-      { productName: "Smart Watch", price: 119.99, date: "2024-09-20", quantity: 1 },
-      { productName: "Portable Charger", price: 29.99, date: "2024-09-25", quantity: 2 },
+      {
+        productName: "Wireless Headphones",
+        price: 49.99,
+        date: "2024-09-15",
+        quantity: 1,
+      },
+      {
+        productName: "Smart Watch",
+        price: 119.99,
+        date: "2024-09-20",
+        quantity: 1,
+      },
+      {
+        productName: "Portable Charger",
+        price: 29.99,
+        date: "2024-09-25",
+        quantity: 2,
+      },
     ],
   };
 
