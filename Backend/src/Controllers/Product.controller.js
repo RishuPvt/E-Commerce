@@ -8,7 +8,6 @@ import { uploadOnCloudinary } from "../Utils/cloudinary.js";
 
 //Handler to createProduct
 const createProduct = asyncHandler(async (req, res) => {
-  console.log(req.body);
 
   try {
     const { name, description, price, category, brand, stock } = req.body;
