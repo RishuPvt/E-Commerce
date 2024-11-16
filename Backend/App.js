@@ -4,7 +4,6 @@ import cookieParser from "cookie-parser";
 import { upload } from "./src/Middleware/Multer.Middleware.js";
 const app = express();
 
-
 // Enabling CORS
 app.use(
   cors({
@@ -27,7 +26,11 @@ app.use(cookieParser());
 
 import userRouter from "./src/Routes/user.route.js";
 
-app.use("/api/v1/users", upload.single("avatar"), userRouter);
+app.use("/api/v1/users", userRouter);
+
+import ProductRouter from "../Backend/src/Routes/Prouct.routes.js";
+
+app.use("/api/v1/products", upload.single("imageUrl"), ProductRouter);
 
 // Exporting the app instance for use in other parts of the application
 export { app };

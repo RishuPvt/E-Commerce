@@ -33,6 +33,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const avatarLocalPath = req.file?.path;
+
   const avatar = await uploadOnCloudinary(avatarLocalPath);
 
   const user = await User.create({
@@ -41,7 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
     phone,
     password,
     address,
-    avatar,
+    avatar: avatar.url,
     username: username.toLowerCase(),
   });
 
@@ -282,6 +283,8 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, user, "Avatar image updated successfully"));
 });
+
+// Define the refreshAccessToken function to handle access token refreshing, wrapped with asyncHandler for error handling
 const refreshAccessToken = asyncHandler(async (req, res) => {
   // Get the incoming refresh token either from cookies or from the request body
   // If no refresh token is provided, throw a 401 Unauthorized error
@@ -293,13 +296,53 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   // Set options for cookie security (httpOnly and secure for security purposes)
   // Generate new access and refresh tokens for the user
   // Return the new access token and refresh token in both cookies and JSON response
+  const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken;
+  if (!incomingRefreshToken) {
+    throw new ApiError(401, "Unauthorized request - No refresh token provided");
+  }
+  try {
+    const decoded = jwt.verify(
+      incomingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
 
-  
+    const user = await User.findById(decoded?._id);
+    if (!user) {
+      throw new ApiError(401, "Invalid refresh token");
+    }
+    if (incomingRefreshToken !== user?.refreshToken) {
+      throw new ApiError(401, "Refresh token is expired or used");
+    }
+
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    const newRefreshToken = user.generateRefreshToken();
+    const accessToken = user.generateAccessToken();
+
+    user.refreshToken = newRefreshToken;
+    await user.save();
+
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .cookie("refreshToken", newRefreshToken, options)
+      .json(
+        new ApiResponse(
+          200,
+          { accessToken, refreshToken: newRefreshToken },
+          "Access token refreshed"
+        )
+      );
+  } catch (error) {
+    throw new ApiError(401, error?.message || "Invalid refresh token");
+  }
 });
-//  Handler to user addToCart
+
 //  Handler to user removeFromCart
 //  Handler to user getCartItems
-//  Handler to user clearCart
 //  Handler to user getOrderHistory
 export {
   registerUser,
@@ -309,4 +352,5 @@ export {
   getCurrentUser,
   updateAccountDetails,
   updateUserAvatar,
+  refreshAccessToken,
 };

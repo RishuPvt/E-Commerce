@@ -11,6 +11,8 @@ const products = [
     rating: 4,
     image: "https://example.com/headphones.jpg",
     discount: 20,
+    brand: "Boat",
+    category: "Audio",
   },
   {
     id: 2,
@@ -19,6 +21,8 @@ const products = [
     price: 119.99,
     rating: 4,
     image: "https://example.com/smartwatch.jpg",
+    brand: "FireBolt",
+    category: "Audio",
   },
   {
     id: 3,
@@ -27,6 +31,8 @@ const products = [
     price: 119.99,
     rating: 3,
     image: "https://example.com/smartwatch.jpg",
+    brand: "Sonata",
+    category: "Audio",
   },
   {
     id: 4,
@@ -35,6 +41,8 @@ const products = [
     price: 119.99,
     rating: 3,
     image: "https://example.com/smartwatch.jpg",
+    brand: "Sony",
+    category: "Audio",
   },
   {
     id: 5,
@@ -43,6 +51,8 @@ const products = [
     price: 119.99,
     rating: 5,
     image: "https://example.com/smartwatch.jpg",
+     brand: "Apples",
+    category: "Audio",
   },
   {
     id: 6,
@@ -51,6 +61,8 @@ const products = [
     price: 119.99,
     rating: 5,
     image: "https://example.com/smartwatch.jpg",
+     brand: "Sony",
+    category: "Whirlpool",
     discount: 20,
   },
   {
@@ -60,6 +72,8 @@ const products = [
     price: 119.99,
     rating: 5,
     image: "https://example.com/smartwatch.jpg",
+     brand: "Samsung",
+    category: "Audio",
   },
   {
     id: 8,
@@ -68,6 +82,9 @@ const products = [
     price: 119.99,
     rating: 2,
     image: "https://example.com/smartwatch.jpg",
+    brand: "Sony",
+    category: "Audio",
+    
   },
 ];
 
@@ -81,9 +98,10 @@ const ProductList = () => {
   };
 
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  product.brand.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  
   const toggleViewAll = () => {
     setVisibleCount(isShowingAll ? 4 : products.length);
   };
