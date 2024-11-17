@@ -6,11 +6,13 @@ import {
   deleteProduct,
 } from "../Controllers/Product.controller.js";
 import { Router } from "express";
+import { adminCheck } from "../Middleware/isAdmin.middleware.js";
+import { verifyJWT } from "../Middleware/auth.middleware.js";
 const router = Router();
 
-router.route("/productregister").post(createProduct);
-router.route("/getProduct/:id").get(getProductById);
-router.route("/getallproducts").get(getAllProducts);
-router.route("/update-product/:id").patch(updateProduct);
-router.route("/deleteProduct/:id").delete(deleteProduct);
+router.route("/productregister").post(adminCheck, verifyJWT,createProduct);
+router.route("/getProduct/:id").get(adminCheck, verifyJWT,getProductById);
+router.route("/getallproducts").get(adminCheck, verifyJWT,getAllProducts);
+router.route("/update-product/:id").patch(adminCheck, verifyJWT,updateProduct);
+router.route("/deleteProduct/:id").delete(adminCheck, verifyJWT,deleteProduct);
 export default router;

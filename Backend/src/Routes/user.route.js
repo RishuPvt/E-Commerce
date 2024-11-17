@@ -7,6 +7,7 @@ import {
   updateAccountDetails,
   updateUserAvatar,
   refreshAccessToken,
+  tioggleAdmin
 } from "../Controllers/User.controller.js";
 import { Router } from "express";
 import { verifyJWT } from "../Middleware/auth.middleware.js";
@@ -22,5 +23,6 @@ router.route("/current-user").get(verifyJWT, getCurrentUser);
 router.route("/update-account").patch(verifyJWT, updateAccountDetails);
 router.route("/update-UserAvatar").patch(verifyJWT, updateUserAvatar);
 router.route("/refresh-token").post(refreshAccessToken);
+router.route("/Admin-pannel/:userId").post(verifyJWT,tioggleAdmin)
 
 export default router;

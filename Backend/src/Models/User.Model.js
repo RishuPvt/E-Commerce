@@ -43,6 +43,9 @@ const userSchema = new Schema(
     refreshToken: {
       type: String, // Refresh token for maintaining session
     },
+    isAdmin: { 
+      type: Boolean, default: false 
+    }, // default to false for regular users
   },
   {
     timestamps: true,

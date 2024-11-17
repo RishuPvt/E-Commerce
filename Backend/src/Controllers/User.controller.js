@@ -341,9 +341,31 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
-//  Handler to user removeFromCart
-//  Handler to user getCartItems
-//  Handler to user getOrderHistory
+const tioggleAdmin = asyncHandler(async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { pin } = req.body;
+
+    if (pin === process.env.PIN) {
+      const user = await User.findByIdAndUpdate(userId, {
+        $set: {
+          isAdmin: true,
+        },
+      });
+    } else {
+      throw new ApiError(400, "PIN NOT MATCHED");
+    }
+    return res
+      .status(200)
+      .json(new ApiResponse(200,{} , "Welcome to Admin Pannel"));
+  } catch (error) {
+    return res
+      .status(400)
+      .json(
+        new ApiResponse(400, error.message,"Something went wrong will login to admin pannel")
+      );
+  }
+});
 export {
   registerUser,
   loginUser,
@@ -353,4 +375,5 @@ export {
   updateAccountDetails,
   updateUserAvatar,
   refreshAccessToken,
+  tioggleAdmin
 };
