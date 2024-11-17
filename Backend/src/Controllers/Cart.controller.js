@@ -96,4 +96,9 @@ const updateCartItem = asyncHandler(async (req, res) => {
 
 
 
-export { addToCart, getCart, deleteCartItem, updateCartItem };
+export { 
+  addToCart, 
+  getCart, 
+  deleteCartItem, 
+  updateCartItem 
+};
