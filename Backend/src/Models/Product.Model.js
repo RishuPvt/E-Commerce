@@ -12,10 +12,10 @@ const productSchema = new Schema(
     ratings: { type: Number, enum: [0, 1, 2, 3, 4, 5], default: 0 },
     reviews: [
       {
-        userId: String,
-        comment: String,
-        rating: { type: Number, enum: [0, 1, 2, 3, 4, 5] },
-      },
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Review",
+        
+      }
     ],
   },
   { timestamps: true }

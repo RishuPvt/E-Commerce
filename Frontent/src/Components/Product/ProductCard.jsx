@@ -1,4 +1,5 @@
 import React from "react";
+
 const ProductCard = ({ product }) => {
   return (
     <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-xl">
@@ -11,16 +12,34 @@ const ProductCard = ({ product }) => {
         <img
           className="w-full h-48 object-cover"
           src={product.image}
-          //   alt={product.name}
+          alt={product.name}
         />
       </div>
       <div className="p-4">
+        {/* Product Name */}
         <h3 className="text-lg font-semibold text-gray-800 truncate">
           {product.name}
         </h3>
+        {/* Product Description */}
         <p className="mt-1 text-gray-600 text-sm line-clamp-2">
           {product.description}
         </p>
+        {/* Product Details */}
+        <div className="mt-2">
+          <p className="text-sm text-gray-500">
+            <span className="font-medium text-gray-800">Brand:</span>{" "}
+            {product.brand}
+          </p>
+          <p className="text-sm text-gray-500">
+            <span className="font-medium text-gray-800">Category:</span>{" "}
+            {product.category}
+          </p>
+          <p className="text-sm text-gray-500">
+            <span className="font-medium text-gray-800">Stock:</span>{" "}
+            {product.stock || "Out of Stock"}
+          </p>
+        </div>
+        {/* Price and Rating */}
         <div className="flex justify-between items-center mt-3">
           <span className="text-lg font-bold text-gray-800">
             ${product.price.toFixed(2)}
@@ -40,6 +59,7 @@ const ProductCard = ({ product }) => {
               ))}
           </span>
         </div>
+        {/* Add to Cart Button */}
         <button className="mt-4 w-full bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-300 transition duration-300">
           Add to Cart
         </button>

@@ -35,5 +35,9 @@ app.use("/api/v1/products", upload.single("imageUrl"), ProductRouter);
 import CartRouter from "../Backend/src/Routes/Cart.routes.js"
 
 app.use("/api/v1/Cart",CartRouter)
+
+import ReviewRouter from "./src/Routes/review.routes.js";
+
+app.use("/api/v1/reviews",ReviewRouter)
 // Exporting the app instance for use in other parts of the application
 export { app };

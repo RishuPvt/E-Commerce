@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
+import { FaSearch, FaUser, FaShoppingCart, FaUserShield } from "react-icons/fa";
 import { BsGithub } from "react-icons/bs";
 
 function TopHead() {
@@ -36,7 +36,7 @@ function TopHead() {
             <FaSearch className="ml-3 text-xl text-gray-600 cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
           </form>
 
-          {/* User, Cart, and GitHub Icons */}
+          {/* User, Cart, Admin, and GitHub Icons */}
           <div className="flex items-center justify-center sm:justify-end w-full sm:w-1/3 mt-4 sm:mt-0 space-x-4 text-lg text-gray-600">
             <NavLink
               to="/profile"
@@ -44,8 +44,7 @@ function TopHead() {
                 isActive ? "text-blue-500 font-bold" : "text-gray-700"
               }
             >
-              {" "}
-              <FaUser className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />{" "}
+              <FaUser className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
             </NavLink>
             <NavLink
               to="/cart"
@@ -53,8 +52,7 @@ function TopHead() {
                 isActive ? "text-blue-500 font-bold" : "text-gray-700"
               }
             >
-              {" "}
-              <FaShoppingCart className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />{" "}
+              <FaShoppingCart className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
             </NavLink>
             <BsGithub className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
           </div>
