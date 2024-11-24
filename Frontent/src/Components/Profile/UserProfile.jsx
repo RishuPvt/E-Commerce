@@ -2,6 +2,7 @@ import React from "react";
 import { FaUserEdit, FaShoppingBag, FaSignOutAlt, FaKey } from "react-icons/fa";
 import TopHead from "../Header/TopHead";
 import MidHeader from "../Header/MidHeader";
+import { Link } from "react-router-dom";
 
 const UserProfile = ({ user }) => {
   return (
@@ -44,9 +45,11 @@ const UserProfile = ({ user }) => {
               <button className="px-5 py-2 bg-red-500 text-white rounded-full font-medium shadow-md hover:bg-red-600 transition duration-200 flex items-center">
                 <FaSignOutAlt className="mr-2" /> Logout
               </button>
+              <Link to="/change-password">
               <button className="px-5 py-2 bg-yellow-500 text-white rounded-full font-medium shadow-md hover:bg-yellow-600 transition duration-200 flex items-center">
                 <FaKey className="mr-2" /> Change Password
               </button>
+              </Link>
             </div>
           </div>
         </div>

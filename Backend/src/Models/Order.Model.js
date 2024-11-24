@@ -9,8 +9,12 @@ const OrderSchema = new Schema(
       required: true,
     },
     products: {
-      type:mongoose.Schema.Types.ObjectId,
-      ref:"Product"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+    cart: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cart",
     },
     totalAmount: {
       type: Number,
@@ -36,5 +40,4 @@ const OrderSchema = new Schema(
   }
 );
 
-
-export const Order = mongoose.model ("Order", OrderSchema)
+export const Order = mongoose.model("Order", OrderSchema);

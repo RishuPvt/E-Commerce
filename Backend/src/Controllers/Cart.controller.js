@@ -11,15 +11,27 @@ const addToCart = asyncHandler(async (req, res) => {
   if (!productId || !quantity) {
     throw new ApiError(400, "Product ID and quantity are required");
   }
-  let cart = await Cart.findOne({ user: userId });
 
-  if (!cart) {
+  let cart = await Cart.findOne({ userId: userId });
+
+  if (cart) {
+    // Check if the product already exists in the cart
+    const existingItemIndex = cart.items.findIndex(
+      (item) => item.productId.toString() === productId
+    );
+
+    if (existingItemIndex !== -1) {
+      // If the product exists, update its quantity
+      cart.items[existingItemIndex].quantity += quantity;
+    } else {
+      // If the product does not exist, add it to the cart
+      cart.items.push({ productId, quantity });
+    }
+  } else {
+    // If no cart exists for the user, create a new cart
     cart = await Cart.create({
       userId: userId,
-      items: {
-        productId: productId,
-        quantity: quantity,
-      },
+      items: [{ productId, quantity }],
     });
   }
 

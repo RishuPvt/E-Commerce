@@ -39,5 +39,9 @@ app.use("/api/v1/Cart",CartRouter)
 import ReviewRouter from "./src/Routes/review.routes.js";
 
 app.use("/api/v1/reviews",ReviewRouter)
+
+import OrderRouter from "./src/Routes/Order.routes.js"
+
+app.use("/api/v1/order", OrderRouter)
 // Exporting the app instance for use in other parts of the application
 export { app };
