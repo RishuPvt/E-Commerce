@@ -12,11 +12,13 @@ const productSchema = new Schema(
     ratings: { type: Number, enum: [0, 1, 2, 3, 4, 5], default: 0 },
     reviews: [
       {
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Review",
-        
-      }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
     ],
+    discountPercentage: { type: Number, required: true },
+    oldPrice: { type: Number, required: true },
+    newPrice: { type: Number, required: true },
   },
   { timestamps: true }
 );

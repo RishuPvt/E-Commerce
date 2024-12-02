@@ -10,7 +10,7 @@ function MidHeader() {
     { Name: "Home", path: "/" },
     { Name: "Category", path: "/Category" },
     { Name: "Hot Offers", path: "/Offers" },
-    { Name: "Compare", path: "/Compare" },
+    { Name: "About", path: "/About" },
   ];
 
   return (

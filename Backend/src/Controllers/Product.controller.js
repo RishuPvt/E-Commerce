@@ -8,26 +8,44 @@ import { uploadOnCloudinary } from "../Utils/cloudinary.js";
 
 //Handler to createProduct
 const createProduct = asyncHandler(async (req, res) => {
-
   try {
-    const { name, description, price, category, brand, stock } = req.body;
-
-    if (!name || !description || !price || !category || !stock || !brand) {
-      throw new ApiError(400, "All fields are required");
-    }
-    console.log(req.file);
-
-    const ImageLocalPath = req.file?.path;
-    const imageUrl = await uploadOnCloudinary(ImageLocalPath);
-
-    const product = await Product.create({
+    const {
       name,
       description,
       price,
       category,
+      brand,
+      stock,
+      discountPercentage,
+    } = req.body;
+
+    if (!name || !description || !price || !category || !stock || !brand) {
+      throw new ApiError(400, "All fields are required");
+    }
+    // console.log(req.file);
+
+    const ImageLocalPath = req.file?.path;
+    const imageUrl = await uploadOnCloudinary(ImageLocalPath);
+    // console.log(imageUrl);
+
+    const oldPrice = price; // Original price is the input price
+    let newPrice = oldPrice; // Initialize with oldPrice
+
+    if (discountPercentage) {
+      newPrice = oldPrice - (oldPrice * discountPercentage) / 100;
+    }
+
+    const product = await Product.create({
+      name,
+      description,
+      price: oldPrice, // Store the original price as `price`
+      category,
       stock,
       brand,
       imageUrl: imageUrl.url,
+      discountPercentage: discountPercentage || 0,
+      oldPrice,
+      newPrice,
     });
 
     return res
@@ -76,12 +94,35 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
 //Handler to updateProduct
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, description, price, category, brand, stock } = req.body;
+  const {
+    name,
+    description,
+    price,
+    category,
+    brand,
+    stock,
+    discountPercentage,
+  } = req.body;
 
-  if (!name || !description || !price || !category || !brand || !stock) {
+  if (
+    !name ||
+    !description ||
+    !price ||
+    !category ||
+    !brand ||
+    !stock ||
+    !discountPercentage
+  ) {
     throw new ApiError(400, "One fields is required");
   }
   const { id } = req.params;
+
+  const oldPrice = price; // Original price is the input price
+  let newPrice = oldPrice; // Initialize with oldPrice
+
+  if (discountPercentage) {
+    newPrice = oldPrice - (oldPrice * discountPercentage) / 100;
+  }
 
   const product = await Product.findByIdAndUpdate(
     id,
@@ -93,6 +134,9 @@ const updateProduct = asyncHandler(async (req, res) => {
         category,
         brand,
         stock,
+        discountPercentage: discountPercentage || 0,
+        oldPrice,
+        newPrice,
       },
     },
     { new: true }

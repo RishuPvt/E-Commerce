@@ -1,6 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaSearch, FaUser, FaShoppingCart, FaUserShield } from "react-icons/fa";
+import {
+  FaSearch,
+  FaUser,
+  FaShoppingCart,
+  FaUserShield,
+  FaSignInAlt,
+} from "react-icons/fa";
 import { BsGithub } from "react-icons/bs";
 
 function TopHead() {
@@ -26,16 +32,6 @@ function TopHead() {
             </h1>
           </div>
 
-          {/* Search Bar */}
-          <form className="flex items-center w-full sm:w-1/2 md:w-1/3 mt-4 sm:mt-0">
-            <input
-              className="w-[80%] sm:w-full px-4 py-2 border-b-2 border-indigo-400 outline-none text-sm md:text-base bg-transparent placeholder-gray-500 focus:border-purple-500"
-              type="text"
-              placeholder="Search for Products..."
-            />
-            <FaSearch className="ml-3 text-xl text-gray-600 cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
-          </form>
-
           {/* User, Cart, Admin, and GitHub Icons */}
           <div className="flex items-center justify-center sm:justify-end w-full sm:w-1/3 mt-4 sm:mt-0 space-x-4 text-lg text-gray-600">
             <NavLink
@@ -53,6 +49,14 @@ function TopHead() {
               }
             >
               <FaShoppingCart className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
+            </NavLink>
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                isActive ? "text-blue-500 font-bold" : "text-gray-700"
+              }
+            >
+              <FaSignInAlt className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
             </NavLink>
             <BsGithub className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
           </div>

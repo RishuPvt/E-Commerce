@@ -6,6 +6,9 @@ import CategoryPage from "../Categorey/Category";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HotOffersPage from "../Categorey/HotOffers";
 import AdminLogin from "../Admin"
+import AboutUs from "../About/About";
+import Login from "../Login/login";
+import Register from "../Login/register"
 function ProfileRouter() {
   return (
     <Router>
@@ -16,6 +19,9 @@ function ProfileRouter() {
         <Route path="/Category" element={<CategoryPage />} />
         <Route path="/Offers" element={<HotOffersPage />} />
         <Route path="/Admin" element={<AdminLogin/>} />
+        <Route path="/About" element={<AboutUs/>} />
+        <Route path="/login" element={ <Login/>}/>
+        <Route path="/register" element={< Register />} />
       </Routes>
     </Router>
   );

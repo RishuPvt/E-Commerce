@@ -115,6 +115,7 @@ const loginUser = asyncHandler(async (req, res) => {
           id: user._id,
           phone: user.phone,
           email: user.email,
+          isAdmin:user.isAdmin
         },
         "User logged In Successfully"
       )
@@ -346,18 +347,21 @@ const tioggleAdmin = asyncHandler(async (req, res) => {
     const { userId } = req.params;
     const { pin } = req.body;
 
+    if(pin !== process.env.PIN) {
+      throw new ApiError(400, "PIN NOT MATCHED");
+    }
     if (pin === process.env.PIN) {
-      const user = await User.findByIdAndUpdate(userId, {
+      const userAdmin = await User.findByIdAndUpdate(userId, {
         $set: {
           isAdmin: true,
         },
-      });
-    } else {
-      throw new ApiError(400, "PIN NOT MATCHED");
-    }
-    return res
+      },{ new: true });
+      return res
       .status(200)
-      .json(new ApiResponse(200,{} , "Welcome to Admin Pannel"));
+      .json(new ApiResponse(200 ,userAdmin, "Welcome to Admin Pannel"));
+    } 
+    throw new ApiError(400 ,"User Not Found")
+   
   } catch (error) {
     return res
       .status(400)

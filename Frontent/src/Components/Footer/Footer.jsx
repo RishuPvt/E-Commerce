@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -92,16 +93,11 @@ const Footer = () => {
           <h4 className="text-xl font-semibold text-white mb-4">
             Stay Connected
           </h4>
-          <form className="mb-4">
-            <input
-              type="email"
-              placeholder="Sign Up for updates"
-              className="p-2 rounded w-full mb-2 text-gray-800 focus:ring-2 focus:ring-pink-500"
-            />
+          <NavLink to="/register">
             <button className="bg-gradient-to-r from-teal-500 to-blue-500 text-white p-2 w-full rounded transition-transform transform hover:scale-105">
               SIGN UP
             </button>
-          </form>
+            </NavLink>
           <div className="flex space-x-4 text-white">
             <a href="https://linkedin.com" className="hover:text-teal-400">
               LinkedIn
