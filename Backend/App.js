@@ -7,7 +7,7 @@ const app = express();
 // Enabling CORS
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN, // Allowing only the specified origin to access resources
+    origin:" http://localhost:5173", //Allowing only the specified origin to access resources
     credentials: true, // Allowing cookies and other credentials to be sent in cross-origin requests
   })
 );

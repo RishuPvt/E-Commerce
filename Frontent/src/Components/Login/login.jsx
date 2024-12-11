@@ -1,13 +1,9 @@
 import React from "react";
-import MidHeader from "../Header/MidHeader";
 import { NavLink } from "react-router-dom";
 
 function Login({ handleFlip }) {
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 px-4">
-      {/* Header */}
-      <MidHeader />
-
+    <div className="min-h-screen flex flex-col items-center px-4">
       {/* Login Card */}
       <div className="w-full max-w-md mt-10 p-8 bg-white rounded-2xl shadow-2xl">
         <h2 className="text-4xl font-extrabold text-gray-800 text-center mb-4">
@@ -63,9 +59,9 @@ function Login({ handleFlip }) {
         {/* Switch to Sign Up */}
         <p className="mt-6 text-center text-base text-gray-600">
           Don’t have an account?{" "}
-          <NavLink to="/register"
-            className="text-teal-500 font-semibold cursor-pointer hover:underline hover:text-teal-600 transition duration-200"
-            onClick={handleFlip}
+          <NavLink
+            to="/register"
+            className="text-indigo-500 font-semibold cursor-pointer hover:underline hover:text-teal-600 transition duration-200"
           >
             Sign up
           </NavLink>
