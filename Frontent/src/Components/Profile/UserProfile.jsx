@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaUserEdit, FaShoppingBag, FaSignOutAlt, FaKey } from "react-icons/fa";
 import TopHead from "../Header/TopHead";
 import MidHeader from "../Header/MidHeader";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
+import {toast} from "react-hot-toast";
+import axios from "axios";
 
 const UserProfile = ({ user }) => {
+
+  const [loading,setLoading]= useState(false);
+  const navigate = useNavigate();
+const [error , setError] = useState(null);
+
+const handleLogout = async (e) => {
+  e.preventDefault(); 
+  setLoading(true);
+
+try {
+   const response = await axios.post(
+          "http://localhost:7000/api/v1/users/logout",
+          {},
+          {
+            withCredentials: true, // Ensure cookies are sent with the request
+          }
+        );
+        toast.success(response.data.message || "User logout successful!");
+  navigate("/login"); // Navigate to the dashboard or target page
+} catch (error) {
+   toast.error(error.response?.data?.message || "Failed to logout. Please try again.");
+   setError(error.response?.data?.message || "Unknown error occurred")
+}
+}
+
   return (
     <div className="bg-gradient-to-b from-blue-100 to-white min-h-screen">
       <TopHead />
@@ -42,8 +69,8 @@ const UserProfile = ({ user }) => {
             
             {/* Change Password and Logout Buttons */}
             <div className="flex space-x-4 mt-8">
-              <button className="px-5 py-2 bg-red-500 text-white rounded-full font-medium shadow-md hover:bg-red-600 transition duration-200 flex items-center">
-                <FaSignOutAlt className="mr-2" /> Logout
+              <button onClick={handleLogout} className="px-5 py-2 bg-red-500 text-white rounded-full font-medium shadow-md hover:bg-red-600 transition duration-200 flex items-center">
+                <FaSignOutAlt className="mr-2" /> {loading ? "Logging Out..." : "LogOut"}
               </button>
               <Link to="/change-password">
               <button className="px-5 py-2 bg-yellow-500 text-white rounded-full font-medium shadow-md hover:bg-yellow-600 transition duration-200 flex items-center">
