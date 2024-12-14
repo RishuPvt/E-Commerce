@@ -58,7 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
   // Return the created user in the response
   return res
     .status(201)
-    .json(new ApiResponse(200, "User registered Successfully",createdUser));
+    .json(new ApiResponse(200, "User registered Successfully", createdUser));
 });
 
 // Function to login a user
@@ -111,13 +111,13 @@ const loginUser = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200, // Status code 200 (OK)
+        "User logged In Successfully",
         {
           id: user._id,
           phone: user.phone,
           email: user.email,
-          isAdmin:user.isAdmin
-        },
-        "User logged In Successfully"
+          isAdmin: user.isAdmin,
+        }
       )
     );
 });
@@ -347,26 +347,33 @@ const tioggleAdmin = asyncHandler(async (req, res) => {
     const { userId } = req.params;
     const { pin } = req.body;
 
-    if(pin !== process.env.PIN) {
+    if (pin !== process.env.PIN) {
       throw new ApiError(400, "PIN NOT MATCHED");
     }
     if (pin === process.env.PIN) {
-      const userAdmin = await User.findByIdAndUpdate(userId, {
-        $set: {
-          isAdmin: true,
+      const userAdmin = await User.findByIdAndUpdate(
+        userId,
+        {
+          $set: {
+            isAdmin: true,
+          },
         },
-      },{ new: true });
+        { new: true }
+      );
       return res
-      .status(200)
-      .json(new ApiResponse(200 ,userAdmin, "Welcome to Admin Pannel"));
-    } 
-    throw new ApiError(400 ,"User Not Found")
-   
+        .status(200)
+        .json(new ApiResponse(200, userAdmin, "Welcome to Admin Pannel"));
+    }
+    throw new ApiError(400, "User Not Found");
   } catch (error) {
     return res
       .status(400)
       .json(
-        new ApiResponse(400, error.message,"Something went wrong will login to admin pannel")
+        new ApiResponse(
+          400,
+          error.message,
+          "Something went wrong will login to admin pannel"
+        )
       );
   }
 });
@@ -379,5 +386,5 @@ export {
   updateAccountDetails,
   updateUserAvatar,
   refreshAccessToken,
-  tioggleAdmin
+  tioggleAdmin,
 };

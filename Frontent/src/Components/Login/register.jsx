@@ -3,68 +3,80 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    phone: "",
-    fullName: "",
-    address: "",
-    password: "",
-    email: "",
-    avatar: null,
-  });
+ // State to manage the registration form data, loading state, success message, and error message
+const [formData, setFormData] = useState({
+  username: "",   // User's username
+  phone: "",      // User's phone number
+  fullName: "",   // User's full name
+  address: "",    // User's address
+  password: "",   // User's password
+  email: "",      // User's email
+  avatar: null,   // User's avatar (profile picture)
+});
 
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
+const [loading, setLoading] = useState(false); // Tracks loading state during form submission
+const [message, setMessage] = useState(null); // Success message after form submission
+const [error, setError] = useState(null);     // Error message for failed submission
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+// Handles input changes for text fields and updates formData state
+const handleInputChange = (e) => {
+  const { name, value } = e.target; // Extract input name and value
+  setFormData({ ...formData, [name]: value }); // Update the corresponding field in formData
+};
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, avatar: e.target.files[0] });
-  };
+// Handles file input change for the avatar and updates formData state
+const handleFileChange = (e) => {
+  setFormData({ ...formData, avatar: e.target.files[0] }); // Store the selected file in formData
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage(null);
-    setError(null);
+// Handles form submission
+const handleSubmit = async (e) => {
+  e.preventDefault(); // Prevents default form submission behavior
+  setLoading(true);   // Set loading state to true
+  setMessage(null);   // Clear any previous success message
+  setError(null);     // Clear any previous error message
 
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
+  try {
+    // Set headers to indicate multipart/form-data content type
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
 
-      const form = new FormData();
-      form.append("username", formData.username);
-      form.append("phone", formData.phone);
-      form.append("fullName", formData.fullName);
-      form.append("address", formData.address);
-      form.append("password", formData.password);
-      form.append("email", formData.email);
-      if (formData.avatar) {
-        form.append("avatar", formData.avatar);
-      }
+    // Create a FormData object to handle file uploads and text data
+    const form = new FormData();
+    form.append("username", formData.username); // Add username to the form
+    form.append("phone", formData.phone);       // Add phone to the form
+    form.append("fullName", formData.fullName); // Add fullName to the form
+    form.append("address", formData.address);   // Add address to the form
+    form.append("password", formData.password); // Add password to the form
+    form.append("email", formData.email);       // Add email to the form
 
-      const response = await axios.post(
-        "http://localhost:5000/api/users/register",
-        form,
-        config
-      );
-
-      setMessage(response.data.message || "User registered successfully!");
-      setLoading(false);
-    } catch (error) {
-      setError(
-        error.response?.data?.message || "Failed to register. Please try again."
-      );
-      setLoading(false);
+    // If an avatar is selected, append it to the form
+    if (formData.avatar) {
+      form.append("avatar", formData.avatar);
     }
-  };
+
+    // Send a POST request to the backend API to register the user
+    const response = await axios.post(
+      "http://localhost:7000/api/v1/users/register", // API endpoint for user registration
+      form, // Form data containing user details
+      config // Configuration object with headers
+    );
+
+    // Set success message if the API call succeeds
+    setMessage(response.data.message || "User registered successfully!");
+    setLoading(false); // Set loading state to false after success
+  } catch (error) {
+    // Capture and display error message if the API call fails
+    setError(
+      error.response?.data?.message || "Failed to register. Please try again."
+    );
+    setLoading(false); // Set loading state to false after failure
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-indigo-100">
@@ -161,7 +173,7 @@ const Register = () => {
           <NavLink to="/login"
             className="text-teal-500 font-semibold cursor-pointer hover:underline hover:text-teal-600 transition duration-200"
           >
-            Sign up
+            Log In 
           </NavLink>
         </p>
       </div>
