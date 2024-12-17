@@ -9,6 +9,7 @@ import AdminLogin from "../Admin";
 import AboutUs from "../About/About";
 import Login from "../Login/login";
 import Register from "../Login/register";
+import Chngpassword from "../ChangePassword/chngpassword" ;
 function ProfileRouter() {
   return (
     <Router>
@@ -22,6 +23,7 @@ function ProfileRouter() {
         <Route path="/About" element={<AboutUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/change-password" element={<Chngpassword />} />
       </Routes>
     </Router>
   );

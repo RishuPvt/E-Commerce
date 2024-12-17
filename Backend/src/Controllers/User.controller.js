@@ -196,8 +196,8 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
+        "Password changed successfully",
         { newPassword: user.password },
-        "Password changed successfully"
       )
     );
 });
@@ -235,7 +235,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
   // Send success response with updated user details
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "Account details updated successfully"));
+    .json(new ApiResponse(200, "Account details updated successfully", user));
 });
 
 // Handler to update user avatar

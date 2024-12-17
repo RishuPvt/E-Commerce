@@ -24,11 +24,14 @@ try {
             withCredentials: true, // Ensure cookies are sent with the request
           }
         );
-        toast.success(response.data.message || "User logout successful!");
-  navigate("/login"); // Navigate to the dashboard or target page
+   toast.success(response.data.message || "User logout successful!");
+   navigate("/login"); // Navigate to the dashboard or target page
 } catch (error) {
    toast.error(error.response?.data?.message || "Failed to logout. Please try again.");
    setError(error.response?.data?.message || "Unknown error occurred")
+}finally {
+  // Reset loading state
+  setLoading(false);
 }
 }
 
@@ -69,7 +72,7 @@ try {
             
             {/* Change Password and Logout Buttons */}
             <div className="flex space-x-4 mt-8">
-              <button onClick={handleLogout} className="px-5 py-2 bg-red-500 text-white rounded-full font-medium shadow-md hover:bg-red-600 transition duration-200 flex items-center">
+              <button onClick={handleLogout} disabled={loading} className="px-5 py-2 bg-red-500 text-white rounded-full font-medium shadow-md hover:bg-red-600 transition duration-200 flex items-center">
                 <FaSignOutAlt className="mr-2" /> {loading ? "Logging Out..." : "LogOut"}
               </button>
               <Link to="/change-password">
