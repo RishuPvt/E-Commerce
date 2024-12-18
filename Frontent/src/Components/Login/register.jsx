@@ -106,6 +106,7 @@ const Register = () => {
               placeholder="Username"
               value={formData.username}
               onChange={handleInputChange}
+              required
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200"
             />
           </div>
@@ -116,6 +117,7 @@ const Register = () => {
               placeholder="Phone Number"
               value={formData.phone}
               onChange={handleInputChange}
+              required
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200"
             />
           </div>
@@ -126,6 +128,7 @@ const Register = () => {
               placeholder="Full Name"
               value={formData.fullName}
               onChange={handleInputChange}
+              required
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200"
             />
           </div>
@@ -136,6 +139,7 @@ const Register = () => {
               placeholder="Address"
               value={formData.address}
               onChange={handleInputChange}
+              required
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200"
             />
           </div>
@@ -146,6 +150,7 @@ const Register = () => {
               placeholder="Password"
               value={formData.password}
               onChange={handleInputChange}
+              required
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200"
             />
           </div>
@@ -156,6 +161,7 @@ const Register = () => {
               placeholder="Email Address"
               value={formData.email}
               onChange={handleInputChange}
+              required
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring focus:ring-indigo-200"
             />
           </div>

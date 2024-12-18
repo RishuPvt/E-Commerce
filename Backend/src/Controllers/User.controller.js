@@ -2,7 +2,7 @@ import { asyncHandler } from "../Utils/asynchandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { User } from "../Models/User.Model.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
-import { uploadOnCloudinary } from "../Utils/cloudinary.js";
+import { uploadOnCloudinary, deleteOnCloudinary } from "../Utils/cloudinary.js";
 
 // Function to register a new user
 const registerUser = asyncHandler(async (req, res) => {
@@ -158,12 +158,11 @@ const logoutUser = asyncHandler(async (req, res) => {
       .clearCookie("accessToken", options)
       .clearCookie("refreshToken", options)
       .json(
-        new ApiResponse(
-          200,
-          "User logged out successfully",
-          { id: user._id, phone: user.phone, email: user.email },
-          
-        )
+        new ApiResponse(200, "User logged out successfully", {
+          id: user._id,
+          phone: user.phone,
+          email: user.email,
+        })
       );
   } catch (error) {
     // console.error("Logout error:", error); // Log the error for debugging
@@ -194,11 +193,9 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(
-      new ApiResponse(
-        200,
-        "Password changed successfully",
-        { newPassword: user.password },
-      )
+      new ApiResponse(200, "Password changed successfully", {
+        newPassword: user.password,
+      })
     );
 });
 
@@ -213,22 +210,22 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 const updateAccountDetails = asyncHandler(async (req, res) => {
   const { fullName, email, phone, address } = req.body;
 
-  if (!fullName && !email && !phone && !address) {
+  if (!(fullName || email || phone || address)) {
     // Throw error if required fields are missing
-    throw new ApiError(400, "All fields are required");
+    throw new ApiError(400, "At least one field is required");
   }
 
-  // Find the user by ID and update full name and email
+  // Construct the update object dynamically
+  const updateFields = {};
+  if (fullName) updateFields.fullName = fullName;
+  if (email) updateFields.email = email;
+  if (phone) updateFields.phone = phone;
+  if (address) updateFields.address = address;
+
+  // Find the user by ID and update only the provided fields
   const user = await User.findByIdAndUpdate(
     req.user?._id,
-    {
-      $set: {
-        fullName,
-        email,
-        phone,
-        address,
-      },
-    },
+    { $set: updateFields },
     { new: true } // Return the updated user
   ).select("-password"); // Exclude password from the result
 
@@ -249,6 +246,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
   // Throw error if Cloudinary upload fails
   // Update user with new avatar URL
   // Send success response with updated user details
+  console.log(req.file);
 
   const avatarLocalPath = req.file?.path;
 
@@ -257,14 +255,9 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
   }
 
   const userAvtarDelete = await User.findById(req.user?._id);
-
   if (userAvtarDelete.avatar) {
     const publicId = userAvtarDelete.avatar.split("/").pop().split(".")[0];
-    await cloudinary.uploader.destroy(publicId, (error, result) => {
-      if (error) {
-        throw new ApiError(500, "Error while deleting old avatar");
-      }
-    });
+    await deleteOnCloudinary(publicId);
   }
 
   const avatar = await uploadOnCloudinary(avatarLocalPath);

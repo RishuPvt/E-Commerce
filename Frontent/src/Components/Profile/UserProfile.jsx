@@ -49,9 +49,11 @@ try {
               alt={user.username}
               className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-blue-300"
             />
+            <Link to="/update-account">
             <button className="mt-6 px-5 py-2 bg-blue-600 text-white rounded-full font-medium shadow-md hover:bg-blue-700 transition duration-200 flex items-center">
               <FaUserEdit className="mr-2" /> Edit Profile
             </button>
+            </Link>
           </div>
 
           <div className="md:w-3/4 md:pl-10">

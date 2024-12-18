@@ -10,6 +10,8 @@ import AboutUs from "../About/About";
 import Login from "../Login/login";
 import Register from "../Login/register";
 import Chngpassword from "../ChangePassword/chngpassword" ;
+import UpdateDetails from "../Updateaccount/updateDeatails"
+import ChnageAvatar from "../ChangeAvatar/ChnageAvatar";
 function ProfileRouter() {
   return (
     <Router>
@@ -24,6 +26,8 @@ function ProfileRouter() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/change-password" element={<Chngpassword />} />
+        <Route path="/update-account" element={<UpdateDetails />} />
+        <Route path="/update-UserAvatar" element={<ChnageAvatar />}  />
       </Routes>
     </Router>
   );
