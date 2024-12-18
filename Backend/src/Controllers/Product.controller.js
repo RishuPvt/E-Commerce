@@ -50,7 +50,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
     return res
       .status(201)
-      .json(new ApiResponse(200, product, "Product registered Successfully"));
+      .json(new ApiResponse(200, "Product registered Successfully" ,product));
   } catch (error) {
     console.error(error);
     res
@@ -84,7 +84,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
 
     return res
       .status(200)
-      .json(new ApiResponse(200, products, "All Product fetched successfully"));
+      .json(new ApiResponse(200, "All Product fetched successfully",products));
   } catch (error) {
     return res
       .status(500)

@@ -1,5 +1,6 @@
-import React from "react";
-
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 const ProductCard = ({ product }) => {
   return (
     <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-xl">
@@ -68,4 +69,5 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+ export default ProductCard;
+

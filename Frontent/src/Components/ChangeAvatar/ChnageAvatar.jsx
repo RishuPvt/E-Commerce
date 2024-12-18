@@ -31,18 +31,20 @@ function ChangeAvatar() {
 
       const form = new FormData();
       form.append("avatar", avatar);
-      console.log(form);
+      //console.log(form);
       const response = await axios.patch(
         "http://localhost:7000/api/v1/users/update-UserAvatar",
         form,
         config
       );
-      if (response.status === 200) {
-        toast.success(
-          response.data.message || "User Avatar Update successful!"
-        );
-        navigate("/profile"); // Navigate to the dashboard or target page
-      }
+      // if (response.status === 200) {
+      //   toast.success(
+      //     response.data.message || "User Avatar Update successful!"
+      //   );
+      //   navigate("/profile"); // Navigate to the dashboard or target page
+      // }
+      toast.success(response.data.message || "User Avatar Update successful!");
+      navigate("/profile");
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
