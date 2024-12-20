@@ -39,7 +39,7 @@ const addToCart = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, cart, "Product added to cart successfully"));
+    .json(new ApiResponse(200, "Product added to cart successfully", cart));
 });
 
 //handler to user getCart
@@ -48,7 +48,7 @@ const getCart = asyncHandler(async (req, res) => {
     const { userId } = req.params;
     const cart = await Cart.find({ userId: userId }).populate(
       "items.productId",
-      "name price"
+      "name price imageUrl"
     );
     if (!cart) {
       throw new ApiError(404, "Cart not found for the user");
@@ -64,14 +64,44 @@ const getCart = asyncHandler(async (req, res) => {
 
 //handler to user DeleteCart
 const deleteCartItem = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  const cart = await Cart.findByIdAndDelete(id);
-  if (!cart) {
-    throw new ApiError(404, "cart item not found");
+  const { id: productId } = req.params;
+  const userId = req.user?._id;
+  //console.log(userId);
+
+  if (!userId) {
+    throw new ApiError(401, "Unauthorized: User not found");
   }
-  return res
-    .status(200)
-    .json(new ApiResponse(200, cart, "cart item Deleted successfully"));
+
+  //console.log("Received delete request for Product ID:", productId);
+
+  // Find the user's cart
+  const cart = await Cart.findOne({ userId: userId });
+
+  //console.log(cart);
+
+  if (!cart) {
+    throw new ApiError(404, "Cart not found");
+  }
+
+  // Filter out the product from the items array
+  const updatedProducts = cart.items.filter((product) => {
+    // console.log("product is ", product);
+
+    //console.log(product._id.toString() !== productId.toString());
+
+    return product._id.toString() !== productId.toString();
+  });
+  // console.log("Cart before deletion:", cart.items);
+
+  cart.items = updatedProducts;
+  await cart.save();
+  // console.log("Updated Products after deletion:", updatedProducts);
+
+  return res.status(200).json(
+    new ApiResponse(200, "Cart item deleted successfully", {
+      updatedProducts,
+    })
+  );
 });
 
 //handler to user updateCartItem
@@ -106,11 +136,4 @@ const updateCartItem = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, cart, "Cart item updated successfully"));
 });
 
-
-
-export { 
-  addToCart, 
-  getCart, 
-  deleteCartItem, 
-  updateCartItem 
-};
+export { addToCart, getCart, deleteCartItem, updateCartItem };
