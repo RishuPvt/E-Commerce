@@ -3,7 +3,7 @@ import { FaStar, FaCartPlus } from "react-icons/fa";
 import MidHeader from "../Header/MidHeader";
 import axios from "axios";
 import toast from "react-hot-toast";
-const ProductPage = ({ product }) => {
+const ProductPage = ({ product ,reviews }) => {
   const [quantity, setQuantity] = useState(1);
 
 
@@ -71,21 +71,21 @@ const ProductPage = ({ product }) => {
         </div>
 
         {/* Reviews Section */}
-        {/* <div className="mt-12">
+        <div className="mt-12">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Customer Reviews
           </h2>
           <div>
-            {product.reviews.map((review, index) => (
+            {reviews.map((review, index) => (
               <div
                 key={index}
                 className="border border-gray-200 rounded-lg p-4 mb-4 bg-gray-50"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-gray-700">
-                    {review.user}
+                    {review.user.username}
                   </span>
-                  <span className="text-sm text-gray-500">{review.date}</span>
+                  <span className="text-sm text-gray-500">{review.createdAt}</span>
                 </div>
                 <p className="mt-2 text-gray-600">{review.comment}</p>
                 <div className="flex mt-2">
@@ -98,7 +98,7 @@ const ProductPage = ({ product }) => {
               </div>
             ))}
           </div>
-        </div> */}
+        </div>
 
         {/* Related Products Section */}
         {/* <div className="mt-12">
@@ -135,11 +135,11 @@ const App = () => {
   const fetchproduct = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:7000/api/v1/products/getProduct/67387b57b5a32871f8338a91",
+        "http://localhost:7000/api/v1/products/getProduct/674d4cd77b4e37a01fab0d58",
         { withCredentials: true }
       );
       setproduct(response.data.data);
-      console.log(response.data.data);
+      //console.log(response.data.data);
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
@@ -153,7 +153,40 @@ const App = () => {
     fetchproduct();
   }, []);
 
-  return <ProductPage product={product} />;
+
+  const [reviews, setreviews] = useState([]);
+const fetchreview =async()=>{
+  try {
+    const response = await axios.get(
+      "http://localhost:7000/api/v1/reviews/getReviewsForProduct/674d4cd77b4e37a01fab0d58",
+      { withCredentials: true }
+    );
+    setreviews(response.data.data);
+    console.log(response.data.data);
+  } catch (error) {
+    const errorMessage =
+        error.response?.data?.message ||
+        "Failed to fetch reviews. Please log in";
+      toast.error(errorMessage);
+  }finally{
+setLoading(false)
+  }
+}
+
+useEffect(()=>{
+  fetchreview();
+},[])
+
+
+
+
+
+
+
+
+
+
+  return <ProductPage product={product} reviews={reviews} />;
 };
 
 export default App;

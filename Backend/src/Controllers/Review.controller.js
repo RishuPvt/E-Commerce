@@ -66,7 +66,10 @@ const getReviewsForProduct = asyncHandler(async (req, res) => {
     const { productId } = req.params;
     const product = await Product.findById(productId).populate({
       path: "reviews",
-      select: "user rating comment createdAt",
+      select: "user rating comment createdAt",populate: {
+        path: "user",
+        select: "username",
+      }
     });
     if (!product) {
       throw new ApiError(404, "Product not found");
@@ -75,7 +78,7 @@ const getReviewsForProduct = asyncHandler(async (req, res) => {
     res
       .status(200)
       .json(
-        new ApiResponse(200, product.reviews, "Reviews fetched successfully")
+        new ApiResponse(200, "Reviews fetched successfully",product.reviews)
       );
   } catch (error) {
     return res
