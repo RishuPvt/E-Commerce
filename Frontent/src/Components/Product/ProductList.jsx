@@ -20,8 +20,8 @@ const ProductList = () => {
         setProducts(response.data.data); // data.data is an array
       } catch (error) {
         const errorMessage =
-          error.response?.data?.message || "Failed to fetch products.";
-        toast.error(errorMessage);
+          error.response?.data?.message || "Failed to fetch products. Please log in";
+          toast.error(errorMessage);
       } finally {
         setLoading(false);
       }

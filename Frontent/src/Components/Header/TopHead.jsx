@@ -40,7 +40,7 @@ function TopHead() {
                 isActive ? "text-blue-500 font-bold" : "text-gray-700"
               }
             >
-              <FaUser className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
+              <FaUser size={25} className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
             </NavLink>
             <NavLink
               to="/cart"
@@ -48,7 +48,7 @@ function TopHead() {
                 isActive ? "text-blue-500 font-bold" : "text-gray-700"
               }
             >
-              <FaShoppingCart className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
+              <FaShoppingCart size={25} className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
             </NavLink>
             <NavLink
               to="/login"
@@ -56,9 +56,9 @@ function TopHead() {
                 isActive ? "text-blue-500 font-bold" : "text-gray-700"
               }
             >
-              <FaSignInAlt className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
+              <FaSignInAlt size={25} className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
             </NavLink>
-            <BsGithub className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
+            <BsGithub size={25} className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
           </div>
         </div>
       </div>

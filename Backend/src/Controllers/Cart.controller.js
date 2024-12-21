@@ -86,7 +86,6 @@ const deleteCartItem = asyncHandler(async (req, res) => {
   // Filter out the product from the items array
   const updatedProducts = cart.items.filter((product) => {
     // console.log("product is ", product);
-
     //console.log(product._id.toString() !== productId.toString());
 
     return product._id.toString() !== productId.toString();
@@ -120,7 +119,7 @@ const updateCartItem = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Cart not found");
   }
   const itemIndex = cart.items.findIndex((items) => {
-    return items.productId.toString() === productId;
+    return items._id.toString() === productId.toString();
   });
 
   if (itemIndex === -1) {
@@ -133,7 +132,7 @@ const updateCartItem = asyncHandler(async (req, res) => {
   await cart.save();
   res
     .status(200)
-    .json(new ApiResponse(200, cart, "Cart item updated successfully"));
+    .json(new ApiResponse(200, "Cart item updated successfully", cart));
 });
 
 export { addToCart, getCart, deleteCartItem, updateCartItem };
