@@ -6,7 +6,7 @@ import MidHeader from "../Header/MidHeader";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity }) => {
+const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity  }) => {
   const calculateTotal = () =>
     cartItems.reduce(
       (total, item) => total + item.productId.price * item.quantity,
@@ -176,7 +176,7 @@ const App = () => {
   };
 
   // handleUpdateQuantity fucntion for user to update cart
-  const handleUpdateQuantity = async (id, quantity) => {
+  const handleUpdateQuantity = async (id, quantity ,userId) => {
     try {
       await axios.put(
         `http://localhost:7000/api/v1/Cart/updateCartItem/675c8b92d4cf59647c154a5c/item/${id}`,

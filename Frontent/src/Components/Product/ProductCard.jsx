@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
+import  {NavLink} from "react-router-dom"
 const ProductCard = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
 
@@ -47,6 +47,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-2xl">
+      <NavLink to="/productpage" >
       <div className="relative">
         {/* Discount Badge */}
         {product.discountPercentage && (
@@ -131,6 +132,7 @@ const ProductCard = ({ product }) => {
           {loading ? "Adding..." : `Add ${quantity} to Cart`}
         </button>
       </div>
+      </NavLink>
     </div>
   );
 };

@@ -7,14 +7,44 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
 
-const UserProfile = ({ user }) => {
-  const [loading, setLoading] = useState(false);
+const UserProfile = () => {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:7000/api/v1/users/current-user",
+          {
+            withCredentials: true,
+          }
+        );
+        // console.log(response.data);
+
+        setUser(response.data.data); //backend sends a `user` object in the response
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message || "Please Logged in..";
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  } 
+
   const handleLogout = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(false);
 
     try {
       const response = await axios.post(
@@ -33,7 +63,7 @@ const UserProfile = ({ user }) => {
       setError(error.response?.data?.message || "Unknown error occurred");
     } finally {
       // Reset loading state
-      setLoading(false);
+      setLoading(true);
     }
   };
 
@@ -131,41 +161,4 @@ const UserProfile = ({ user }) => {
     </div>
   );
 };
-
-// Example usage of the UserProfile component with sample user data
-const App = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:7000/api/v1/users/current-user",
-          {
-            withCredentials: true,
-          }
-        );
-        // console.log(response.data);
-
-        setUser(response.data.data); //backend sends a `user` object in the response
-      } catch (err) {
-        const errorMessage =
-          err.response?.data?.message || "Please Logged in..";
-        toast.error(errorMessage);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  return <UserProfile user={user} />;
-};
-
-export default App;
+export default UserProfile;
