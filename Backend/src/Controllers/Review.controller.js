@@ -10,7 +10,7 @@ const addReview = asyncHandler(async (req, res) => {
     const { userId } = req.params;
 
     // Validate inputs
-    if (!productId || !rating || !comment) {
+    if (!rating || !comment) {
       throw new ApiError(
         400,
         "All fields (productId, rating, comment) are required"
@@ -49,7 +49,7 @@ const addReview = asyncHandler(async (req, res) => {
       .status(201)
       .json(new ApiResponse(201, review, "Review registered successfully"));
   } catch (error) {
-    console.error(error);
+    // console.error(error);
 
     if (error instanceof ApiError) {
       return res
@@ -66,10 +66,11 @@ const getReviewsForProduct = asyncHandler(async (req, res) => {
     const { productId } = req.params;
     const product = await Product.findById(productId).populate({
       path: "reviews",
-      select: "user rating comment createdAt",populate: {
+      select: "user rating comment createdAt",
+      populate: {
         path: "user",
         select: "username",
-      }
+      },
     });
     if (!product) {
       throw new ApiError(404, "Product not found");
@@ -78,7 +79,7 @@ const getReviewsForProduct = asyncHandler(async (req, res) => {
     res
       .status(200)
       .json(
-        new ApiResponse(200, "Reviews fetched successfully",product.reviews)
+        new ApiResponse(200, "Reviews fetched successfully", product.reviews)
       );
   } catch (error) {
     return res
@@ -107,40 +108,67 @@ const getReviewsByUser = asyncHandler(async (req, res) => {
 const updateReview = asyncHandler(async (req, res) => {
   const { reviewId } = req.params;
   const { rating, comment } = req.body;
+  const userId = req.user?._id;
+
   if (!rating || !comment) {
     throw new ApiError(400, "One fields is required");
   }
-
-  const review = await Review.findByIdAndUpdate(reviewId, {
-    $set: {
-      rating,
-      comment,
-    },
-  });
+  const review = await Review.findById(reviewId).populate("user");
   if (!review) {
     throw new ApiError(404, "Review not found");
   }
+
+  if (userId?.toString() !== review.user?._id.toString()) {
+    throw new ApiError(403, "You are not authorized to delete this review");
+  }
+
+  review.rating = rating;
+  review.comment = comment;
+  await review.save();
+
+  const product = await Product.findOneAndUpdate(
+    { reviews: reviewId },
+    {
+      $set: {
+        rating: rating,
+        comment: comment,
+      },
+    },
+    { new: true }
+  );
+
   return res
     .status(200)
-    .json(new ApiResponse(200, review, "review updated successfully"));
+    .json(new ApiResponse(200, "review updated successfully", review));
 });
 
 const deleteReview = asyncHandler(async (req, res) => {
   const { reviewId } = req.params;
-  const review = await Review.findByIdAndDelete(reviewId);
+  const userId = req.user?._id;
+
+  const review = await Review.findById(reviewId).populate("user");
 
   if (!review) {
-    throw new ApiError(404, "review not found");
+    throw new ApiError(404, "Review not found");
   }
+
+  if (userId?.toString() !== review.user?._id.toString()) {
+    throw new ApiError(403, "You are not authorized to delete this review");
+  }
+
+  await review.deleteOne();
+
   const product = await Product.findOneAndUpdate(
     { reviews: reviewId },
     { $pull: { reviews: reviewId } },
     { new: true }
   );
-  return res
+
+  res
     .status(200)
-    .json(new ApiResponse(200, review, "review Deleted successfully"));
+    .json(new ApiResponse(200, "Review deleted successfully", review));
 });
+
 export {
   addReview,
   getReviewsForProduct,
