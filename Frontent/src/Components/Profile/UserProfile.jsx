@@ -10,10 +10,9 @@ import { useEffect } from "react";
 const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
 
   const [user, setUser] = useState(null);
-
+  const [order, setorder] = useState([]);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -35,12 +34,29 @@ const UserProfile = () => {
       }
     };
 
+    const fetchorder = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:7000/api/v1/order/getOrderHistory",
+          { withCredentials: true }
+        );
+        setorder(response.data.data);
+      } catch (error) {
+        const errorMessage =
+          error.response?.data?.message || "Please Logged in..";
+        toast.error(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchUser();
+    fetchorder();
   }, []);
 
   if (loading) {
     return <p>Loading...</p>;
-  } 
+  }
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -123,40 +139,49 @@ const UserProfile = () => {
         </div>
 
         {/* Shopping History Section */}
-        {/* <div className="bg-white shadow-lg rounded-lg p-8 transition-transform duration-300 hover:scale-105">
-          <h3 className="text-3xl font-semibold text-gray-800 mb-6">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 shadow-xl rounded-lg p-8 transition-transform duration-300 hover:scale-105">
+          <h3 className="text-4xl font-bold text-indigo-700 mb-8 text-center">
             Shopping History
           </h3>
-          {user.shoppingHistory.length === 0 ? (
-            <p className="text-gray-700 text-lg">No purchases yet.</p>
+          {order.length === 0 ? (
+            <p className="text-gray-700 text-lg text-center">
+              No purchases yet.
+            </p>
           ) : (
             <div className="space-y-6">
-              {user.shoppingHistory.map((order, index) => (
+              {order.map((order, index) => (
                 <div
                   key={index}
-                  className="border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow duration-200"
+                  className="bg-white border border-gray-200 rounded-lg p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-start">
                     <div>
-                      <h4 className="text-xl font-semibold text-gray-800">
-                        {order.productName}
+                      <h4 className="text-2xl font-semibold text-indigo-800">
+                        {order.shippingAddress}
                       </h4>
-                      <p className="text-gray-500 text-sm">
-                        Order Date: {order.date}
+                      <p className="text-gray-500 text-sm mt-1">
+                        Order Date:{" "}
+                        {new Date(order.createdAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <span className="text-green-600 font-bold text-lg">
-                      ${order.price.toFixed(2)}
+                    <span className="text-green-500 font-bold text-xl">
+                      ${order.totalAmount.toFixed(2)}
                     </span>
                   </div>
-                  <p className="text-gray-500 mt-2">
-                    Quantity: {order.quantity}
-                  </p>
+                  <div className="mt-4">
+                    <p className="text-gray-700">
+                      <strong>Payment Status:</strong> {order.paymentStatus}
+                    </p>
+                    <p className="text-gray-700 mt-1">
+                      <strong>Order Status:</strong> {order.orderStatus}
+                    </p>
+    
+                  </div>
                 </div>
               ))}
             </div>
           )}
-        </div> */}
+        </div>
       </div>
     </div>
   );
