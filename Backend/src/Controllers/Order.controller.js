@@ -6,57 +6,64 @@ import { User } from "../Models/User.Model.js";
 import { Cart } from "../Models/Cart.Model.js";
 
 const createOrder = asyncHandler(async (req, res) => {
-  const { items, totalAmount, shippingAddress, paymentMethod } = req.body;
+ 
 
-  if (!items || !totalAmount || !shippingAddress || !paymentMethod) {
+  const { totalAmount, shippingAddress, paymentMethod } = req.body;
+
+  if (!totalAmount || !shippingAddress || !paymentMethod) {
     throw new ApiError(
       400,
       "All fields are required: totalPrice, shippingAddress, and paymentMethod"
     );
   }
   const { CartId } = req.params;
+
   const cart = await Cart.findById(CartId);
 
   const userId = req.user?._id;
+
   if (!userId && !cart) {
     throw new ApiError(
       401,
       "Unauthorized: User not authenticated or cart not found"
     );
   }
-  const order = await Order.create({
-    userId: userId,
-    cart: CartId,
-    items,
-    totalAmount,
-    shippingAddress,
-    paymentMethod,
-    status: "confom", // Default status
-  });
-  if (!order) {
-    throw new ApiError(500, "Failed to create the order");
+
+  if (userId?.toString() === cart.userId?.toString()) {
+    const order = await Order.create({
+      userId: userId,
+      cart: CartId,
+      totalAmount,
+      shippingAddress,
+      paymentMethod,
+      status: "confom", // Default status
+    });
+    if (!order) {
+      throw new ApiError(500, "Failed to create the order");
+    }
+    return res
+      .status(201)
+      .json(new ApiResponse(200, "Order Placed Successfully", order));
+  } else {
+    throw new ApiError(403, "You are not authorized to delete this review");
   }
-  return res
-    .status(201)
-    .json(new ApiResponse(200, order, "Order Placed Successfully"));
 });
 
 const getOrderHistory = asyncHandler(async (req, res) => {
   const userId = req.user?._id;
-  console.log(userId);
+  //console.log(userId);
 
   if (!userId) {
     throw new ApiError(401, "Unauthorized: User not authenticated");
   }
-  const order = await Order.find({ userId: userId }).sort({ createdAt: -1 });
-  console.log(order);
+  const order = await Order.find({ userId: userId }).sort({ createdAt: -1 })
 
   if (!order || order.length === 0) {
     throw new ApiError(404, "No orders found for the user");
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, order, "Order history fetched successfully"));
+    .json(new ApiResponse(200, "Order history fetched successfully",order));
 });
 
 const getOrderDetails = asyncHandler(async (req, res) => {
