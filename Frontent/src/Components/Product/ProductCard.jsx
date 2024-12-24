@@ -62,6 +62,7 @@ const ProductCard = ({ product }) => {
           alt={product.name}
         />
       </div>
+      </NavLink>
       <div className="p-4">
         {/* Product Name */}
         <h3 className="text-lg font-semibold text-gray-800 truncate">
@@ -132,7 +133,6 @@ const ProductCard = ({ product }) => {
           {loading ? "Adding..." : `Add ${quantity} to Cart`}
         </button>
       </div>
-      </NavLink>
     </div>
   );
 };
