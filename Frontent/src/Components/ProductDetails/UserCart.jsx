@@ -5,13 +5,18 @@ import TopHead from "../Header/TopHead";
 import MidHeader from "../Header/MidHeader";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { NavLink } from "react-router-dom";
 
 const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity  }) => {
-  const calculateTotal = () =>
-    cartItems.reduce(
+  //const [totalamount,setTotalamount] = useState();
+  const calculateTotal = () =>{
+  const amount =   cartItems.reduce(
       (total, item) => total + item.productId.price * item.quantity,
       0
-    );
+    )
+    //setTotalamount(amount)
+  return amount;
+  };
 
   return (
     <div className="bg-gradient-to-b from-gray-50 to-gray-200 min-h-screen">
@@ -120,9 +125,11 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity  }) => {
                   ${calculateTotal().toFixed(2)}
                 </span>
               </div>
+              <NavLink to={`/order/${calculateTotal()}`}>
               <button className="mt-8 bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg w-full hover:bg-blue-700 transition duration-200">
                 Proceed to Checkout
               </button>
+              </NavLink>
             </div>
           </div>
         )}
