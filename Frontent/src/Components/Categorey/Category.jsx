@@ -40,7 +40,7 @@ const CategoryPage = () => {
   // Filter categories to show only those with name "demo1" and matching the search query
   const filteredCategories = categories.filter(
     (category) =>
-      category.category.toLowerCase() === "buds" &&
+      category.category.toLowerCase() === "electronics" &&
       category.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 

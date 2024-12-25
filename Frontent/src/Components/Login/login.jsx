@@ -3,7 +3,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+import {useUserContext} from "../../context/Usercontext"
+
 function Login() {
+
+  const {setUser} = useUserContext();
   // State to manage the login form data and loading status
   const [formData, setFormData] = useState({
     phone: "", // User's phone number
@@ -35,6 +39,14 @@ function Login() {
       if (response.status === 200) {
         // Display success toast
         // console.log(response?.data?.message)
+        //console.log(response?.data?.data);
+        
+        setUser({
+          
+            userId:response?.data?.data?.id,
+            authStatus:true
+          }
+        );
         toast.success(response.data.message || "User login successful!");
         navigate("/"); // Navigate to the dashboard or target page
       }

@@ -6,15 +6,14 @@ import MidHeader from "../Header/MidHeader";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { NavLink } from "react-router-dom";
+import { useUserContext } from "../../context/Usercontext";
 
 const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity  }) => {
-  //const [totalamount,setTotalamount] = useState();
   const calculateTotal = () =>{
   const amount =   cartItems.reduce(
       (total, item) => total + item.productId.price * item.quantity,
       0
     )
-    //setTotalamount(amount)
   return amount;
   };
 
@@ -142,12 +141,13 @@ const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity  }) => {
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const {user:userContext} = useUserContext();
+  console.log(userContext);
   // fetchCart fucntion for user getCart
   const fetchCart = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:7000/api/v1/Cart/getCart/675c8b92d4cf59647c154a5c",
+        `http://localhost:7000/api/v1/Cart/getCart/${userContext.userId}`,
         {
           withCredentials: true,
         }
@@ -186,7 +186,7 @@ const App = () => {
   const handleUpdateQuantity = async (id, quantity ,userId) => {
     try {
       await axios.put(
-        `http://localhost:7000/api/v1/Cart/updateCartItem/675c8b92d4cf59647c154a5c/item/${id}`,
+        `http://localhost:7000/api/v1/Cart/updateCartItem/${userContext.userId}/item/${id}`,
         { quantity },
         {
           withCredentials: true,

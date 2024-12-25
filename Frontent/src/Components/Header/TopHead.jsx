@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useUserContext } from "../../context/Usercontext";
 import {
   FaSearch,
   FaUser,
@@ -10,6 +11,7 @@ import {
 import { BsGithub } from "react-icons/bs";
 
 function TopHead() {
+  const {user}=useUserContext()
   return (
     <>
       <div>
@@ -50,15 +52,22 @@ function TopHead() {
             >
               <FaShoppingCart size={25} className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
             </NavLink>
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                isActive ? "text-blue-500 font-bold" : "text-gray-700"
-              }
-            >
-              <FaSignInAlt size={25} className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
-            </NavLink>
+
+            {user.authStatus === true ? (
+              <div></div> // No element to display if user is logged in
+            ) : (
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive ? "text-blue-500 font-bold" : "text-gray-700"
+                }
+              >
+                <FaSignInAlt size={25} className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
+              </NavLink>
+            )}
+            <NavLink to="https://github.com/RishuPvt">
             <BsGithub size={25} className="cursor-pointer hover:text-indigo-600 transition-colors duration-200" />
+            </NavLink>
           </div>
         </div>
       </div>

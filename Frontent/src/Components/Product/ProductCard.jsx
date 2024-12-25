@@ -1,7 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import  {NavLink} from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { useUserContext } from "../../context/Usercontext";
+import { useCartContext } from "../../context/Caetcontext";
+
 const ProductCard = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
 
@@ -14,13 +17,18 @@ const ProductCard = ({ product }) => {
   };
 
   const [loading, setLoading] = useState(false);
+  const { user: userContext } = useUserContext();
+   const { setcartId } = useCartContext();
+  // console.log(setcartId);
+
+  //console.log(userContext);
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:7000/api/v1/Cart/add-Cart/675c8b92d4cf59647c154a5c",
+        `http://localhost:7000/api/v1/Cart/add-Cart/${userContext.userId}`,
         {
           productId: product._id, // Send the product ID
           quantity,
@@ -30,10 +38,17 @@ const ProductCard = ({ product }) => {
         }
       );
 
-      // console.log( product.id ,quantity );
+    
+ //console.log(response.data?.data?._id);
+ //console.log(response.data?.data?.userId);
+
 
       if (response.status === 200) {
         toast.success("Product added to cart!");
+         setcartId({
+          cartId: response?.data?.data?._id,
+          userId: response?.data?.data.userId,
+         });
       }
     } catch (error) {
       const errorMessage =
@@ -44,24 +59,18 @@ const ProductCard = ({ product }) => {
       setLoading(false);
     }
   };
-
+  //console.log(product._id ,"this is product id");
   return (
     <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-2xl">
-      <NavLink to="/productpage" >
-      <div className="relative">
-        {/* Discount Badge */}
-        {product.discountPercentage && (
-          <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-lg shadow-md z-10">
-            {product.discountPercentage}% OFF
-          </span>
-        )}
-        {/* Product Image */}
-        <img
-          className="w-full h-56 object-cover"
-          src={product.imageUrl}
-          alt={product.name}
-        />
-      </div>
+      <NavLink to={`/productpage/${product._id}`}>
+        <div className="relative">
+          {/* Product Image */}
+          <img
+            className="w-full h-56 object-cover"
+            src={product.imageUrl}
+            alt={product.name}
+          />
+        </div>
       </NavLink>
       <div className="p-4">
         {/* Product Name */}

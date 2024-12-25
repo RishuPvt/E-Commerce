@@ -4,7 +4,8 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import MidHeader from "../Header/MidHeader";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useUserContext } from "../../context/Usercontext";
 const ProductPage = ({
   product,
   reviews,
@@ -103,45 +104,55 @@ const ProductPage = ({
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Customer Reviews
           </h2>
-          <div>
-            {reviews.map((review) => (
-              <div
-                key={review._id}
-                className="border border-gray-200 rounded-lg p-4 mb-4 bg-gray-50"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-gray-700">
-                    {review.user.username}
-                  </span>
-                  <span className="text-sm text-gray-500">
-                    {new Date(review.createdAt).toLocaleDateString()}
-                  </span>
+          {reviews ? (
+            <div className="space-y-4">
+              {reviews.map((review) => (
+                <div
+                  key={review._id}
+                  className="border border-gray-200 rounded-lg p-4 bg-gray-50"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-gray-700">
+                      {review.user?.username || "Anonymous"}
+                    </span>
+                    <span className="text-sm text-gray-500">
+                      {new Date(review.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-gray-600">{review.comment}</p>
+                  <div className="flex mt-2">
+                    {Array(review.rating)
+                      .fill(0)
+                      .map((_, i) => (
+                        <FaStar key={i} className="text-yellow-500" />
+                      ))}
+                  </div>
+                  <div className="flex justify-end mt-4 space-x-2">
+                    <button
+                      className="text-blue-600 hover:text-blue-800 flex items-center"
+                      onClick={() => handleEditReview(review)}
+                    >
+                      <MdEdit className="mr-1" /> Edit
+                    </button>
+                    <button
+                      className="text-red-600 hover:text-red-800 flex items-center"
+                      onClick={() => onDeleteReview(review._id)}
+                    >
+                      <MdDelete className="mr-1" /> Delete
+                    </button>
+                  </div>
                 </div>
-                <p className="mt-2 text-gray-600">{review.comment}</p>
-                <div className="flex mt-2">
-                  {Array(review.rating)
-                    .fill(0)
-                    .map((_, i) => (
-                      <FaStar key={i} className="text-yellow-500" />
-                    ))}
-                </div>
-                <div className="flex justify-end mt-4 space-x-2">
-                  <button
-                    className="text-blue-600 hover:text-blue-800 flex items-center"
-                    onClick={() => handleEditReview(review)}
-                  >
-                    <MdEdit className="mr-1" /> Edit
-                  </button>
-                  <button
-                    className="text-red-600 hover:text-red-800 flex items-center"
-                    onClick={() => onDeleteReview(review._id)}
-                  >
-                    <MdDelete className="mr-1" /> Delete
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          ):(
+            <div className="text-center py-16">
+            <AiOutlineShoppingCart className="text-6xl text-gray-400 mx-auto mb-4" />
+            <p className="text-gray-700 text-lg">
+              No reviews yet. Be the first to review this product!
+            </p>
           </div>
+          )}
+       
 
           <div className="mt-8 border-t border-gray-300 pt-4">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
@@ -181,7 +192,14 @@ const ProductPage = ({
   );
 };
 
-const App = () => {
+const ProductApp = () => {
+  const path = window.location.pathname;
+  const eachPath = path.split("/");
+  const id = eachPath[2];
+
+    const {user:userId} = useUserContext();
+//console.log(userId);
+
   const [product, setProduct] = useState({});
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -189,7 +207,7 @@ const App = () => {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:7000/api/v1/products/getProduct/674d4cd77b4e37a01fab0d58",
+        `http://localhost:7000/api/v1/products/getProduct/${id}`,
         { withCredentials: true }
       );
       setProduct(response.data.data);
@@ -203,7 +221,7 @@ const App = () => {
   const fetchReviews = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:7000/api/v1/reviews/getReviewsForProduct/674d4cd77b4e37a01fab0d58",
+        `http://localhost:7000/api/v1/reviews/getReviewsForProduct/${id}`,
         { withCredentials: true }
       );
       setReviews(response.data.data);
@@ -215,36 +233,34 @@ const App = () => {
   const addReview = async (newReview) => {
     try {
       const response = await axios.post(
-        "http://localhost:7000/api/v1/reviews/addreview/675c8b92d4cf59647c154a5c",
+        `http://localhost:7000/api/v1/reviews/addreview/${userId.userId}`,
         { productId: product._id, ...newReview },
         { withCredentials: true }
       );
       setReviews((prevReviews) => [...prevReviews, response.data.data]);
       toast.success("Review added successfully!");
     } catch (error) {
+      console.error(error)
       toast.error("Failed to add review.");
     }
   };
 
   const deleteReview = async (reviewId) => {
-   
-    
-    try{
-    const data =  await axios.delete(
+    try {
+      const data = await axios.delete(
         `http://localhost:7000/api/v1/reviews/deleteReview/${reviewId}`,
         { withCredentials: true }
-      )
-       setReviews((prevReviews) =>
-         prevReviews.filter(
-           (review) => review._id.toString() !== reviewId.toString()
-         )
-       );
-     
+      );
+      setReviews((prevReviews) =>
+        prevReviews.filter(
+          (review) => review._id.toString() !== reviewId.toString()
+        )
+      );
 
       toast.success("Review deleted successfully!");
     } catch (error) {
       console.log(error);
-      
+
       toast.error("Failed to delete review.");
     }
   };
@@ -283,4 +299,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default ProductApp;

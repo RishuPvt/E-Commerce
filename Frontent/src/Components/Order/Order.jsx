@@ -3,17 +3,18 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-const PlaceOrder = ({ cartId }) => {
+ import { useCartContext } from "../../context/Caetcontext";
+const PlaceOrder = () => {
     const {amount} = useParams()
   const [orderDetails, setOrderDetails] = useState({
     totalAmount: amount,
     shippingAddress: "",
     paymentMethod: "",
   });
-
-  console.log(amount);
   
   const [loading, setLoading] = useState(false);
+   const {cartId : cartIdcontext}=useCartContext();
+   
 const Navigate=useNavigate()
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +27,7 @@ const Navigate=useNavigate()
 
     try {
       const response = await axios.post(
-        `http://localhost:7000/api/v1/order/createOrder/6763ec57c8590be2481bdfe1`,
+        `http://localhost:7000/api/v1/order/createOrder/${cartIdcontext.cartId}`,
         orderDetails,
         {
           withCredentials: true,

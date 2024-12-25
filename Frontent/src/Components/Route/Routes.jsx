@@ -12,7 +12,7 @@ import Register from "../Login/register";
 import Chngpassword from "../ChangePassword/chngpassword" ;
 import UpdateDetails from "../Updateaccount/updateDeatails"
 import ChnageAvatar from "../ChangeAvatar/ChnageAvatar";
-import ProductPage from "../ProductDetails/ProductPage"
+import ProductApp from "../ProductDetails/ProductPage"
 import PlaceOrder from "../Order/Order"
 function ProfileRouter() {
   return (
@@ -30,7 +30,7 @@ function ProfileRouter() {
         <Route path="/change-password" element={<Chngpassword />} />
         <Route path="/update-account" element={<UpdateDetails />} />
         <Route path="/update-UserAvatar" element={<ChnageAvatar />}  />
-        <Route path="/productpage" element={<ProductPage />} />
+        <Route path="/productpage/:id" element={<ProductApp />} />
         <Route path="/order/:amount" element={<PlaceOrder/>} />
       </Routes>
     </Router>

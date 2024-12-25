@@ -6,8 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
+import { useUserContext } from "../../context/Usercontext";
 
 const UserProfile = () => {
+  
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -43,8 +45,7 @@ const UserProfile = () => {
         setorder(response.data.data);
       } catch (error) {
         const errorMessage =
-          error.response?.data?.message || "Please Logged in..";
-        toast.error(errorMessage);
+          error.response?.data?.message || "";
       } finally {
         setLoading(false);
       }

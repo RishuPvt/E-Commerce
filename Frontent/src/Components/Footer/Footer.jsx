@@ -1,7 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+import {useUserContext} from "../../context/Usercontext"
 const Footer = () => {
+  const {user}=useUserContext()
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 p-10">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -93,11 +94,18 @@ const Footer = () => {
           <h4 className="text-xl font-semibold text-white mb-4">
             Stay Connected
           </h4>
+
+          {user.authStatus === true ?(
+<div className=""></div>
+          ):(
           <NavLink to="/register">
             <button className="bg-gradient-to-r from-teal-500 to-blue-500 text-white p-2 w-full rounded transition-transform transform hover:scale-105">
               SIGN UP
             </button>
             </NavLink>
+)}
+
+
           <div className="flex space-x-4 text-white">
             <a href="https://linkedin.com" className="hover:text-teal-400">
               LinkedIn

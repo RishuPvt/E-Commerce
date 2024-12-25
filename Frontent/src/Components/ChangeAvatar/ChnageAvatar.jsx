@@ -37,14 +37,14 @@ function ChangeAvatar() {
         form,
         config
       );
-      // if (response.status === 200) {
-      //   toast.success(
-      //     response.data.message || "User Avatar Update successful!"
-      //   );
-      //   navigate("/profile"); // Navigate to the dashboard or target page
-      // }
+      if (response.statusCode === 200) {
+        toast.success(
+          response.data.message || "User Avatar Update successful!"
+        );
+        navigate("/"); // Navigate to the dashboard or target page
+      }
       toast.success(response.data.message || "User Avatar Update successful!");
-      navigate("/profile");
+      navigate("/");
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
