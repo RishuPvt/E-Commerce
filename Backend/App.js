@@ -30,7 +30,7 @@ app.use("/api/v1/users", userRouter);
 
 import ProductRouter from "../Backend/src/Routes/Prouct.routes.js";
 
-app.use("/api/v1/products", upload.single("imageUrl"), ProductRouter);
+app.use("/api/v1/products", ProductRouter);
 
 import CartRouter from "../Backend/src/Routes/Cart.routes.js"
 

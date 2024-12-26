@@ -18,6 +18,7 @@ const createProduct = asyncHandler(async (req, res) => {
       stock,
       discountPercentage,
     } = req.body;
+console.log(req.body);
 
     if (!name || !description || !price || !category || !stock || !brand) {
       throw new ApiError(400, "All fields are required");

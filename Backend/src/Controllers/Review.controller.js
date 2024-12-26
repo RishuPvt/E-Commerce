@@ -26,6 +26,11 @@ const addReview = asyncHandler(async (req, res) => {
       throw new ApiError(404, "Product not found");
     }
 
+    // const existingReview = await Review.findOne({
+    //   product: productId,
+    //   user: userId,
+    // });
+
     // Check if user has already submitted a review
     const existingReview = product.reviews.find(
       (review) => review.user.toString() === userId.toString()
@@ -41,21 +46,14 @@ const addReview = asyncHandler(async (req, res) => {
       comment,
     });
 
-    // Add review reference to the product
     product.reviews.push(review._id);
     await product.save();
 
     res
       .status(201)
-      .json(new ApiResponse(201, review, "Review registered successfully"));
+      .json(new ApiResponse(201, "Review registered successfully",review));
   } catch (error) {
-    // console.error(error);
-
-    if (error instanceof ApiError) {
-      return res
-        .status(error.statusCode)
-        .json(new ApiResponse(error.statusCode, {}, error.message));
-    }
+    //console.error(error);
 
     res.status(500).json(new ApiResponse(500, {}, "Internal Server Error"));
   }
