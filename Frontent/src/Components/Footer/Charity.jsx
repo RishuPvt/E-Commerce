@@ -1,9 +1,9 @@
 import React from "react";
-import delivery from "../../assets/delivery.png";
-import percentage from "../../assets/percentage.png";
-import year from "../../assets/year.png";
-import replace from "../../assets/Replace.png";
-import carity from "../../assets/Charity.png";
+import delivery from "@/assets/delivery.png";
+import percentage from "@/assets/percentage.png";
+import year from "@/assets/year.png";
+import replace from "@/assets/Replace.png";
+import carity from "@/assets/charity.png";
 
 function Charity() {
   const list = [

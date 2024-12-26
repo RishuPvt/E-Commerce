@@ -1,7 +1,7 @@
 import React from "react";
-import banner from "../../assets/banner-1.png";
-import banner2 from "../../assets/banner-2.png";
-import banner3 from "../../assets/banner-3.png";
+import banner from "@/assets/banner-1.png";
+import banner2 from "@/assets/banner-2.png";
+import banner3 from "@/assets/banner-3.png";
 
 function LowerHeader() {
   const list = [
