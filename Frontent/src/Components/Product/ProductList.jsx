@@ -14,7 +14,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "backebdUrl/products/getallproducts",
+          `${backebdUrl}/products/getallproducts`,
           { withCredentials: true }
         );
         setProducts(response.data.data); // data.data is an array

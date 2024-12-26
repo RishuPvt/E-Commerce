@@ -28,7 +28,7 @@ const Navigate=useNavigate()
 
     try {
       const response = await axios.post(
-        `backebdUrl/order/createOrder/${cartIdcontext.cartId}`,
+        `${backebdUrl}/order/createOrder/${cartIdcontext.cartId}`,
         orderDetails,
         {
           withCredentials: true,

@@ -34,7 +34,7 @@ function ChangeAvatar() {
       form.append("avatar", avatar);
       //console.log(form);
       const response = await axios.patch(
-        "backebdUrl/users/update-UserAvatar",
+        `${backebdUrl}/users/update-UserAvatar`,
         form,
         config
       );

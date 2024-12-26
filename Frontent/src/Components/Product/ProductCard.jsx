@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `backebdUrl/Cart/add-Cart/${userContext.userId}`,
+        `${backebdUrl}/Cart/add-Cart/${userContext.userId}`,
         {
           productId: product._id, // Send the product ID
           quantity,

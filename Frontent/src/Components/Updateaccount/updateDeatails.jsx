@@ -34,7 +34,7 @@ function UpdateDetails() {
       console.log("final form data send " + formData);
 
       const response = await axios.patch(
-        "backebdUrl/users/update-account", // API endpoint for login
+        `${backebdUrl}/users/update-account`, // API endpoint for login
         formData,
         config
       );

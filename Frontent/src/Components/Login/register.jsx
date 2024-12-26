@@ -62,7 +62,7 @@ const Register = () => {
 
       // Send a POST request to the backend API to register the user
       const response = await axios.post(
-        "backebdUrl/users/register", // API endpoint for user registration
+        `${backebdUrl}/users/register`, // API endpoint for user registration
         form, // Form data containing user details
         config // Configuration object with headers
       );

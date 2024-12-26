@@ -14,7 +14,7 @@ const CategoryPage = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "backebdUrl/products/getallproducts",
+          `${backebdUrl}/products/getallproducts`,
           {
             withCredentials: true,
           }

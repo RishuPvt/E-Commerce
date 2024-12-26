@@ -30,7 +30,7 @@ function Chngpassword() {
 
       // Send plain JSON data instead of FormData
       const response = await axios.post(
-        "backebdUrl/users/change-password",
+        `${backebdUrl}/users/change-password`,
         {
           oldPassword: FormData.oldPassword,
           newPassword: FormData.newPassword,
