@@ -7,7 +7,7 @@ const app = express();
 // Enabling CORS
 app.use(
   cors({
-    origin:"https://e-commerce-mu-amber-16.vercel.app/", //Allowing only the specified origin to access resources
+    origin:"https://e-commerce-mu-amber-16.vercel.app", //Allowing only the specified origin to access resources
     credentials: true, // Allowing cookies and other credentials to be sent in cross-origin requests
   })
 );
