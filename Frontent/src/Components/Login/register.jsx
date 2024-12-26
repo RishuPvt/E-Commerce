@@ -75,6 +75,8 @@ const Register = () => {
       setMessage(response.data.message || "User registered successfully!");
       setLoading(false); // Set loading state to false after success
     } catch (error) {
+      console.log(error);
+      
       // Capture and display error message if the API call fails
       setError(
         error.response?.data?.message || "Failed to register. Please try again."
