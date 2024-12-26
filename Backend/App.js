@@ -5,12 +5,15 @@ import { upload } from "./src/Middleware/Multer.Middleware.js";
 const app = express();
 
 // Enabling CORS
-app.use(
-  cors({
-    origin:"https://e-commerce-mu-amber-16.vercel.app", //Allowing only the specified origin to access resources
-    credentials: true, // Allowing cookies and other credentials to be sent in cross-origin requests
-  })
-);
+const corsOptions = {
+  origin: 'https://e-commerce-r9xo.onrender.com', 
+  credentials: true, 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], 
+  allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'Authorization'], 
+};
+
+app.use(cors(corsOptions));
+
 
 // Middleware to parse JSON payloads with a size limit of 16kb
 app.use(express.json({ limit: "16kb" }));
