@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { use } from "react";
 import toast from "react-hot-toast";
+import { backebdUrl } from "../../Api";
 function Chngpassword() {
   const [FormData, setFormData] = useState({
     oldPassword: "",
@@ -29,7 +30,7 @@ function Chngpassword() {
 
       // Send plain JSON data instead of FormData
       const response = await axios.post(
-        "http://localhost:7000/api/v1/users/change-password",
+        "backebdUrl/users/change-password",
         {
           oldPassword: FormData.oldPassword,
           newPassword: FormData.newPassword,

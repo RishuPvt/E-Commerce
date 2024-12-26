@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
 import { useUserContext } from "../../context/Usercontext";
-
+import { backebdUrl } from "../../Api";
 const UserProfile = () => {
   
   const [loading, setLoading] = useState(true);
@@ -39,7 +39,7 @@ const UserProfile = () => {
     const fetchorder = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:7000/api/v1/order/getOrderHistory",
+          "backebdUrl/order/getOrderHistory",
           { withCredentials: true }
         );
         setorder(response.data.data);
@@ -65,7 +65,7 @@ const UserProfile = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:7000/api/v1/users/logout",
+        "backebdUrl/users/logout",
         {},
         {
           withCredentials: true, // Ensure cookies are sent with the request

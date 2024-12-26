@@ -3,6 +3,7 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { backebdUrl } from "../../Api";
 const Register = () => {
   // State to manage the registration form data, loading state, success message, and error message
   const [formData, setFormData] = useState({
@@ -61,7 +62,7 @@ const Register = () => {
 
       // Send a POST request to the backend API to register the user
       const response = await axios.post(
-        "http://localhost:7000/api/v1/users/register", // API endpoint for user registration
+        "backebdUrl/users/register", // API endpoint for user registration
         form, // Form data containing user details
         config // Configuration object with headers
       );

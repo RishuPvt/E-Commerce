@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { backebdUrl } from "../../Api";
 const ProductList = () => {
   const [products, setProducts] = useState([]); // Initialize with an empty array
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const ProductList = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:7000/api/v1/products/getallproducts",
+          "backebdUrl/products/getallproducts",
           { withCredentials: true }
         );
         setProducts(response.data.data); // data.data is an array

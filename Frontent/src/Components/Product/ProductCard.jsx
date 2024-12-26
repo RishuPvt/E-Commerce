@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import { useUserContext } from "../../context/Usercontext";
 import { useCartContext } from "../../context/Caetcontext";
-
+import { backebdUrl } from "../../Api";
 const ProductCard = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
 
@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:7000/api/v1/Cart/add-Cart/${userContext.userId}`,
+        `backebdUrl/Cart/add-Cart/${userContext.userId}`,
         {
           productId: product._id, // Send the product ID
           quantity,

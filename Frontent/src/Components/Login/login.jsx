@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
+import { backebdUrl } from "../../Api";
 import {useUserContext} from "../../context/Usercontext"
 
 function Login() {
@@ -31,7 +31,7 @@ function Login() {
     try {
       // Send a POST request to the login API endpoint with form data
       const response = await axios.post(
-        "http://localhost:7000/api/v1/users/login", // API endpoint for login
+        "backebdUrl/users/login", // API endpoint for login
         formData, // Data to be sent in the request body
         { withCredentials: true } // Include credentials (cookies) in the request
       );

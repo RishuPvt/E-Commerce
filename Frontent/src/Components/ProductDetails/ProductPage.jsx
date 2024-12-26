@@ -207,7 +207,7 @@ const ProductApp = () => {
   const fetchProduct = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:7000/api/v1/products/getProduct/${id}`,
+        `https://e-commerce-r9xo.onrender.com/api/v1/products/getProduct/${id}`,
         { withCredentials: true }
       );
       setProduct(response.data.data);
@@ -221,7 +221,7 @@ const ProductApp = () => {
   const fetchReviews = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:7000/api/v1/reviews/getReviewsForProduct/${id}`,
+        `https://e-commerce-r9xo.onrender.com/api/v1/reviews/getReviewsForProduct/${id}`,
         { withCredentials: true }
       );
       setReviews(response.data.data);
@@ -233,7 +233,7 @@ const ProductApp = () => {
   const addReview = async (newReview) => {
     try {
       const response = await axios.post(
-        `http://localhost:7000/api/v1/reviews/addreview/${userId.userId}`,
+        `https://e-commerce-r9xo.onrender.com/api/v1/reviews/addreview/${userId.userId}`,
         { productId: product._id, ...newReview },
         { withCredentials: true }
       );
@@ -248,7 +248,7 @@ const ProductApp = () => {
   const deleteReview = async (reviewId) => {
     try {
       const data = await axios.delete(
-        `http://localhost:7000/api/v1/reviews/deleteReview/${reviewId}`,
+        `https://e-commerce-r9xo.onrender.com/api/v1/reviews/deleteReview/${reviewId}`,
         { withCredentials: true }
       );
       setReviews((prevReviews) =>
@@ -268,7 +268,7 @@ const ProductApp = () => {
   const updateReview = async (reviewId, updatedReview) => {
     try {
       const response = await axios.put(
-        `http://localhost:7000/api/v1/reviews/updateReview/${reviewId}`,
+        `https://e-commerce-r9xo.onrender.com/api/v1/reviews/updateReview/${reviewId}`,
         updatedReview,
         { withCredentials: true }
       );

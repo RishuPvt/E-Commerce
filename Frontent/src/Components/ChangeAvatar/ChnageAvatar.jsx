@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { backebdUrl } from "../../Api";
 function ChangeAvatar() {
   const [avatar, setAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ function ChangeAvatar() {
       form.append("avatar", avatar);
       //console.log(form);
       const response = await axios.patch(
-        "http://localhost:7000/api/v1/users/update-UserAvatar",
+        "backebdUrl/users/update-UserAvatar",
         form,
         config
       );

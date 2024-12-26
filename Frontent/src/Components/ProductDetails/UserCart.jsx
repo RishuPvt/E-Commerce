@@ -7,7 +7,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import { useUserContext } from "../../context/Usercontext";
-
 const CartPage = ({ cartItems, onRemoveItem, onUpdateQuantity  }) => {
   const calculateTotal = () =>{
   const amount =   cartItems.reduce(
@@ -147,7 +146,7 @@ const App = () => {
   const fetchCart = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:7000/api/v1/Cart/getCart/${userContext.userId}`,
+        `https://e-commerce-r9xo.onrender.com/api/v1/Cart/getCart/${userContext.userId}`,
         {
           withCredentials: true,
         }
@@ -170,7 +169,7 @@ const App = () => {
   // handleDelete fucntion for user delete cart
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:7000/api/v1/Cart/deleteCart/${id}`, {
+      await axios.delete(`https://e-commerce-r9xo.onrender.com/api/v1/Cart/deleteCart/${id}`, {
         withCredentials: true,
       });
       toast.success("Cart item deleted successfully!");
@@ -186,7 +185,7 @@ const App = () => {
   const handleUpdateQuantity = async (id, quantity ,userId) => {
     try {
       await axios.put(
-        `http://localhost:7000/api/v1/Cart/updateCartItem/${userContext.userId}/item/${id}`,
+        `https://e-commerce-r9xo.onrender.com/api/v1/Cart/updateCartItem/${userContext.userId}/item/${id}`,
         { quantity },
         {
           withCredentials: true,

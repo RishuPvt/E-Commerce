@@ -4,7 +4,7 @@ import TopHead from "../Header/TopHead";
 import MidHeader from "../Header/MidHeader";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import {backebdUrl} from "../../Api";
 const CategoryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
@@ -14,7 +14,7 @@ const CategoryPage = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:7000/api/v1/products/getallproducts",
+          "backebdUrl/products/getallproducts",
           {
             withCredentials: true,
           }

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
  import { useCartContext } from "../../context/Caetcontext";
+ import { backebdUrl } from "../../Api";
 const PlaceOrder = () => {
     const {amount} = useParams()
   const [orderDetails, setOrderDetails] = useState({
@@ -27,7 +28,7 @@ const Navigate=useNavigate()
 
     try {
       const response = await axios.post(
-        `http://localhost:7000/api/v1/order/createOrder/${cartIdcontext.cartId}`,
+        `backebdUrl/order/createOrder/${cartIdcontext.cartId}`,
         orderDetails,
         {
           withCredentials: true,
