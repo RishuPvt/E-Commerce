@@ -4,7 +4,7 @@ import { asyncHandler } from "../Utils/asynchandler.js";
 import { User } from "../Models/User.Model.js";
 import { Product } from "../Models/Product.Model.js";
 import { Cart } from "../Models/Cart.Model.js";
-import { uploadOnCloudinary } from "../Utils/cloudinary.js";
+import { uploadOnCloudinary } from "../Utils/Cloudinary.js";
 
 //Handler to createProduct
 const createProduct = asyncHandler(async (req, res) => {
