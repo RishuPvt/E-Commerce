@@ -57,12 +57,19 @@ function MidHeader() {
       {isOpen && (
         <ul className="flex flex-col md:hidden items-center bg-gradient-to-b from-gray-50 to-indigo-100 py-4 space-y-2 w-full shadow-inner">
           {list.map((item, index) => (
+             <NavLink
+             to={item.path}
+             className={({ isActive }) =>
+               isActive ? "text-blue-500 font-bold" : "text-gray-700"
+             }
+           >
             <li
               className="py-2 text-indigo-600 text-lg cursor-pointer hover:bg-indigo-200 transition-all duration-300 w-full text-center"
               key={index}
             >
               {item.Name}
             </li>
+            </NavLink>
           ))}
         </ul>
       )}
