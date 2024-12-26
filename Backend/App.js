@@ -6,7 +6,7 @@ const app = express();
 
 // Enabling CORS
 const corsOptions = {
-  origin: 'https://e-commerce-r9xo.onrender.com', 
+  origin: 'https://e-commerce-mu-amber-16.vercel.app/', 
   credentials: true, 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], 
   allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'Authorization'], 
