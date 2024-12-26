@@ -2,7 +2,7 @@ import { asyncHandler } from "../Utils/asynchandler.js";
 import { ApiError } from "../Utils/ApiError.js";
 import { User } from "../Models/User.Model.js";
 import { ApiResponse } from "../Utils/ApiResponse.js";
-import { uploadOnCloudinary, deleteOnCloudinary } from "../Utils/cloudinary.js";
+import { uploadOnCloudinary, deleteOnCloudinary } from "../Utils/Cloudinary.js";
 
 // Function to register a new user
 const registerUser = asyncHandler(async (req, res) => {
