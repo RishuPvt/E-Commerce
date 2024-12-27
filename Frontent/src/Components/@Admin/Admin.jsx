@@ -21,7 +21,7 @@ const AdminLogin = () => {
     setloading(true);
     try {
       const response = await axios.post(
-        `${backebdUrl}/Admin-pannel/675d1b3b5a63bca6189aade4`,
+        `http//localhost:7000/Admin-pannel/675d1b3b5a63bca6189aade4`,
         {
           pin
         },
@@ -29,6 +29,8 @@ const AdminLogin = () => {
           withCredentials: true,
         },
       );
+      console.log(response?.data?.data);
+      
       if (response.status === 200) {
         toast.success("Login Successful! Redirecting to Admin Panel...");
         navigate("/");

@@ -23,7 +23,7 @@ function ProfileRouter() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/Category" element={<CategoryPage />} />
         <Route path="/Offers" element={<HotOffersPage />} />
-        <Route path="/Admin" element={<AdminLogin />} />
+        <Route path="/Admin/" element={<AdminLogin />} />
         <Route path="/About" element={<AboutUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
