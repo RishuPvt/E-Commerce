@@ -84,7 +84,7 @@ const getOrderDetails = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, order, "Order details fetched successfully"));
+    .json(new ApiResponse(200, "Order details fetched successfully",order));
 });
 
 const cancelOrder = asyncHandler(async (req, res) => {
@@ -110,7 +110,7 @@ const cancelOrder = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, order, "Order has been successfully canceled"));
+    .json(new ApiResponse(200, "Order has been successfully canceled",order));
 });
 
 export { createOrder, getOrderHistory, getOrderDetails, cancelOrder };
