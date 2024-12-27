@@ -1,24 +1,38 @@
 import React, { useState } from "react";
-
+import toast from "react-hot-toast";
+import { useUserContext } from "../../context/Usercontext";
+import axios from "axios";
+import { backebdUrl } from "../../Api";
+import { useNavigate } from "react-router-dom";
 const AdminLogin = () => {
-  const [pin, setPin] = useState(""); // State for the PIN input
-  const [error, setError] = useState(""); // State for error messages
+  const [pin, setPin] = useState("");
+  const [loading , setloading]=useState(false)
+const {user:userId}=useUserContext
+console.log(userId);
 
-  // Simulated PIN for demonstration purposes
-  const adminPin = "1234";
+  const navigate = useNavigate();
 
   const handlePinChange = (e) => {
     setPin(e.target.value);
-    setError(""); // Clear error on input change
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
-    if (pin === adminPin) {
-      alert("Login Successful! Redirecting to Admin Panel...");
-      // Add logic to navigate to the Admin Dashboard
-    } else {
-      setError("Invalid PIN. Please try again.");
+setloading(true)
+try{
+
+
+    const response = await axios.post(`${backebdUrl}/Admin-pannel/${userId}`,
+      {
+        withCredentials: true,
+      }
+    )
+    if (response.status === 200) {
+      toast.success("Login Successful! Redirecting to Admin Panel...");
+      navigate("/")
+    } 
+  } catch(error){
+      toast.error("Invalid PIN. Please try again.");
     }
   };
 
@@ -41,9 +55,7 @@ const AdminLogin = () => {
             placeholder="Enter PIN"
             className="w-full px-4 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
           />
-          {error && (
-            <p className="text-red-500 text-sm text-center">{error}</p>
-          )}
+
 
           {/* Login Button */}
           <button

@@ -358,7 +358,7 @@ const tioggleAdmin = asyncHandler(async (req, res) => {
       );
       return res
         .status(200)
-        .json(new ApiResponse(200, userAdmin, "Welcome to Admin Pannel"));
+        .json(new ApiResponse(200, "Welcome to Admin Pannel",userAdmin));
     }
     throw new ApiError(400, "User Not Found");
   } catch (error) {

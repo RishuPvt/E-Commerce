@@ -5,7 +5,6 @@ import CartPage from "../ProductDetails/UserCart";
 import CategoryPage from "../Categorey/Category";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HotOffersPage from "../Categorey/HotOffers";
-import AdminLogin from "../Admin";
 import AboutUs from "../About/About";
 import Login from "../Login/login";
 import Register from "../Login/register";
@@ -14,6 +13,7 @@ import UpdateDetails from "../Updateaccount/updateDeatails"
 import ChnageAvatar from "../ChangeAvatar/ChnageAvatar";
 import ProductApp from "../ProductDetails/ProductPage"
 import PlaceOrder from "../Order/Order"
+import AdminLogin from "../@Admin/Admin";
 function ProfileRouter() {
   return (
     <Router>
