@@ -21,7 +21,7 @@ const AdminLogin = () => {
     setloading(true);
     try {
       const response = await axios.post(
-        `http//localhost:7000/Admin-pannel/675d1b3b5a63bca6189aade4`,
+        `http//localhost:7000/api/v1/usersAdmin-pannel/675d1b3b5a63bca6189aade4`,
         {
           pin
         },
