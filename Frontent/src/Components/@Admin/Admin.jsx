@@ -6,9 +6,9 @@ import { backebdUrl } from "../../Api";
 import { useNavigate } from "react-router-dom";
 const AdminLogin = () => {
   const [pin, setPin] = useState("");
-  const [loading , setloading]=useState(false)
-const {user:userId}=useUserContext
-console.log(userId);
+  const [loading, setloading] = useState(false);
+  const { user: userId } = useUserContext();
+  console.log(userId, "this is user id");
 
   const navigate = useNavigate();
 
@@ -16,23 +16,27 @@ console.log(userId);
     setPin(e.target.value);
   };
 
-  const handleLogin = async(e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-setloading(true)
-try{
-
-
-    const response = await axios.post(`${backebdUrl}/Admin-pannel/${userId}`,
-      {
-        withCredentials: true,
+    setloading(true);
+    try {
+      const response = await axios.post(
+        `${backebdUrl}/Admin-pannel/${userId}`,
+        {
+          pin
+        },
+        {
+          withCredentials: true,
+        },
+      );
+      if (response.status === 200) {
+        toast.success("Login Successful! Redirecting to Admin Panel...");
+        navigate("/");
       }
-    )
-    if (response.status === 200) {
-      toast.success("Login Successful! Redirecting to Admin Panel...");
-      navigate("/")
-    } 
-  } catch(error){
+    } catch (error) {
       toast.error("Invalid PIN. Please try again.");
+    }finally{
+      setloading(false)
     }
   };
 
@@ -56,14 +60,17 @@ try{
             className="w-full px-4 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-400"
           />
 
-
           {/* Login Button */}
           <button
-            type="submit"
-            className="w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-md font-semibold hover:from-blue-500 hover:to-indigo-500 transition-all duration-300"
-          >
-            Login
-          </button>
+  type="submit"
+  className={`w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-md font-semibold transition-all duration-300 ${
+    loading ? "opacity-50 cursor-not-allowed" : "hover:from-blue-500 hover:to-indigo-500"
+  }`}
+  disabled={loading}
+>
+  {loading ? "Logging in..." : "Login"}
+</button>
+
         </form>
       </div>
     </div>
