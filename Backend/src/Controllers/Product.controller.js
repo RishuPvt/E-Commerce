@@ -18,7 +18,7 @@ const createProduct = asyncHandler(async (req, res) => {
       stock,
       discountPercentage,
     } = req.body;
-console.log(req.body);
+    //console.log(req.body);
 
     if (!name || !description || !price || !category || !stock || !brand) {
       throw new ApiError(400, "All fields are required");
@@ -105,16 +105,23 @@ const updateProduct = asyncHandler(async (req, res) => {
     discountPercentage,
   } = req.body;
 
+  console.log(req.body);
+
   if (
-    !name ||
-    !description ||
-    !price ||
-    !category ||
-    !brand ||
-    !stock ||
-    !discountPercentage
+    !(
+      name ||
+      description ||
+      price ||
+      category ||
+      brand ||
+      stock ||
+      discountPercentage
+    )
   ) {
-    throw new ApiError(400, "One fields is required");
+    throw new ApiError(
+      400,
+      "At least one field is required to update the product"
+    );
   }
   const { id } = req.params;
 
@@ -125,21 +132,20 @@ const updateProduct = asyncHandler(async (req, res) => {
     newPrice = oldPrice - (oldPrice * discountPercentage) / 100;
   }
 
+  const updateFields = {};
+  if (name) updateFields.name = name;
+  if (description) updateFields.description = description;
+  if (price) updateFields.price = price;
+  if (category) updateFields.category = category;
+  if (stock) updateFields.stock = stock;
+  if (brand) updateFields.brand = brand;
+  if (discountPercentage)
+    updateFields.discountPercentage = discountPercentage || 0;
+
   const product = await Product.findByIdAndUpdate(
     id,
-    {
-      $set: {
-        name,
-        description,
-        price,
-        category,
-        brand,
-        stock,
-        discountPercentage: discountPercentage || 0,
-        oldPrice,
-        newPrice,
-      },
-    },
+
+    { $set: updateFields },
     { new: true }
   );
   if (!product) {

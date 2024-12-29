@@ -11,7 +11,7 @@ import { adminCheck } from "../Middleware/isAdmin.middleware.js";
 import { upload } from "../Middleware/Multer.Middleware.js";
 const router = Router();
 
-router.route("/productregister").post( verifyJWT, upload.single("imageUrl")  ,createProduct);
+router.route("/productregister").post(adminCheck, verifyJWT, upload.single("imageUrl")  ,createProduct);
 router.route("/getProduct/:id").get( verifyJWT,getProductById);
 router.route("/getallproducts").get( verifyJWT,getAllProducts);
 router.route("/update-product/:id").patch( verifyJWT,adminCheck,updateProduct);
