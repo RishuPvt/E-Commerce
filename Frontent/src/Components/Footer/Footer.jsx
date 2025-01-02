@@ -122,7 +122,7 @@ const Footer = () => {
 
       {/* Footer Bottom */}
       <div className="mt-8 border-t border-gray-700 pt-4 text-center text-gray-400">
-        <p>&copy; 2024 Your Company Name. All Rights Reserved.</p>
+        <p>&copy; 2024 Vendor Mart. All Rights Reserved.</p>
         <div className="flex justify-center space-x-4 mt-2">
           <a href="/privacy-policy" className="hover:text-teal-400">
             Privacy Policy

@@ -13,7 +13,7 @@ const router = Router();
 
 router.route("/productregister").post(adminCheck, verifyJWT, upload.single("imageUrl")  ,createProduct);
 router.route("/getProduct/:id").get( verifyJWT,getProductById);
-router.route("/getallproducts").get( verifyJWT,getAllProducts);
+router.route("/getallproducts").get( getAllProducts);
 router.route("/update-product/:id").patch( verifyJWT,adminCheck,updateProduct);
 router.route("/deleteProduct/:id").delete( verifyJWT,adminCheck,deleteProduct);
 export default router;
