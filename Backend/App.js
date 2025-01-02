@@ -6,7 +6,7 @@ const app = express();
 
 // Enabling CORS
 const corsOptions = {
-   origin: 'https://e-commerce-haxgtsx2i-rishupvts-projects.vercel.app/', 
+   origin: 'e-commerce-mu-amber-16.vercel.app', 
   //origin: ' http://localhost:5173',
   credentials: true, 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], 
