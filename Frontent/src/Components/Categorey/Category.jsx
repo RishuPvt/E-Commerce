@@ -5,6 +5,7 @@ import MidHeader from "../Header/MidHeader";
 import axios from "axios";
 import toast from "react-hot-toast";
 import {backebdUrl} from "../../Api";
+import axiosinstance from "../axios/axiosinstance";
 const CategoryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategories] = useState([]);
@@ -13,7 +14,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosinstance.get(
           `${backebdUrl}/products/getallproducts`,
           {
             withCredentials: true,

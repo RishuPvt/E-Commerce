@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
  import { useCartContext } from "../../context/Caetcontext";
  import { backebdUrl } from "../../Api";
+ import axiosinstance from "../axios/axiosinstance";
 const PlaceOrder = () => {
     const {amount} = useParams()
   const [orderDetails, setOrderDetails] = useState({
@@ -27,7 +28,7 @@ const Navigate=useNavigate()
     setLoading(true);
 
     try {
-      const response = await axios.post(
+      const response = await axiosinstance.post(
         `${backebdUrl}/order/createOrder/${cartIdcontext.cartId}`,
         orderDetails,
         {

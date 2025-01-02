@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { backebdUrl } from "../../Api";
 import {useUserContext} from "../../context/Usercontext"
-
+import axiosinstance from "../axios/axiosinstance";
 function Login() {
 
   const {setUser} = useUserContext();
@@ -30,7 +30,7 @@ function Login() {
 
     try {
       // Send a POST request to the login API endpoint with form data
-      const response = await axios.post(
+      const response = await axiosinstance.post(
         `${backebdUrl}/users/login`, // API endpoint for login
         formData, // Data to be sent in the request body
         { withCredentials: true } // Include credentials (cookies) in the request

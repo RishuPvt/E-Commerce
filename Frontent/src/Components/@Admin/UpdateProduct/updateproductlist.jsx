@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import ProductCard from "./ProductCard";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { backebdUrl } from "../../Api";
-import axiosinstance from "../axios/axiosinstance";
-const ProductList = () => {
+import { backebdUrl } from "../../../Api";
+import UpdateProductCard from "./updateproductcart";
+import axiosinstance from "../../axios/axiosinstance";
+const UpdateProductlist = () => {
   const [products, setProducts] = useState([]); // Initialize with an empty array
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(4);
+ 
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,8 +22,9 @@ const ProductList = () => {
         setProducts(response.data.data); // data.data is an array
       } catch (error) {
         const errorMessage =
-          error.response?.data?.message || "Failed to fetch products. Please log in";
-          toast.error(errorMessage);
+          error.response?.data?.message ||
+          "Failed to fetch products. Please log in";
+        toast.error(errorMessage);
       } finally {
         setLoading(false);
       }
@@ -30,6 +32,9 @@ const ProductList = () => {
 
     fetchProducts();
   }, []);
+
+  //console.log(products);
+  
 
   const filteredProducts = products.filter(
     (product) =>
@@ -69,9 +74,9 @@ const ProductList = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredProducts.slice(0, visibleCount).map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+         {filteredProducts.slice(0, visibleCount).map((product) => (
+          <UpdateProductCard key={product.id} product={product} />
+        ))} 
       </div>
 
       {/* View More / Show Less Button */}
@@ -87,4 +92,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default UpdateProductlist;

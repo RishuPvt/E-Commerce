@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { useUserContext } from "../../context/Usercontext";
+import axiosinstance from "../axios/axiosinstance";
 const ProductPage = ({
   product,
   reviews,
@@ -206,7 +207,7 @@ const ProductApp = () => {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get(
+      const response = await axiosinstance.get(
         `https://e-commerce-r9xo.onrender.com/api/v1/products/getProduct/${id}`,
         { withCredentials: true }
       );
@@ -220,7 +221,7 @@ const ProductApp = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(
+      const response = await axiosinstance.get(
         `https://e-commerce-r9xo.onrender.com/api/v1/reviews/getReviewsForProduct/${id}`,
         { withCredentials: true }
       );
@@ -232,7 +233,7 @@ const ProductApp = () => {
 
   const addReview = async (newReview) => {
     try {
-      const response = await axios.post(
+      const response = await axiosinstance.post(
         `https://e-commerce-r9xo.onrender.com/api/v1/reviews/addreview/${userId.userId}`,
         { productId: product._id, ...newReview },
         { withCredentials: true }
@@ -247,7 +248,7 @@ const ProductApp = () => {
 
   const deleteReview = async (reviewId) => {
     try {
-      const data = await axios.delete(
+      const data = await axiosinstance.delete(
         `https://e-commerce-r9xo.onrender.com/api/v1/reviews/deleteReview/${reviewId}`,
         { withCredentials: true }
       );
@@ -267,7 +268,7 @@ const ProductApp = () => {
 
   const updateReview = async (reviewId, updatedReview) => {
     try {
-      const response = await axios.put(
+      const response = await axiosinstance.put(
         `https://e-commerce-r9xo.onrender.com/api/v1/reviews/updateReview/${reviewId}`,
         updatedReview,
         { withCredentials: true }

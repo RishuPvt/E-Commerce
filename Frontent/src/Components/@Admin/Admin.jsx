@@ -4,11 +4,14 @@ import { useUserContext } from "../../context/Usercontext";
 import axios from "axios";
 import { backebdUrl } from "../../Api";
 import { useNavigate } from "react-router-dom";
+import axiosinstance from "../axios/axiosinstance";
 const AdminLogin = () => {
+    const {setUser} = useUserContext();
   const [pin, setPin] = useState("");
   const [loading, setloading] = useState(false);
-  const { user: userId } = useUserContext();
-  console.log(userId, "this is user id");
+ 
+  // const { user: userId } = useUserContext();
+  // console.log(userId, "this is user id");
 
   const navigate = useNavigate();
 
@@ -20,25 +23,32 @@ const AdminLogin = () => {
     e.preventDefault();
     setloading(true);
     try {
-      const response = await axios.post(
-        `http//localhost:7000/api/v1/usersAdmin-pannel/675d1b3b5a63bca6189aade4`,
+      const response = await axiosinstance.post(
+        `${backebdUrl}/users/Admin-pannel/676321adcbd1e6a6ea63abdc`,
         {
-          pin
+          pin,
         },
         {
           withCredentials: true,
-        },
+        }
       );
       console.log(response?.data?.data);
-      
+
       if (response.status === 200) {
+        setUser({
+          
+          userId:response?.data?.data?.id,
+          authStatus:true
+        }
+      );
         toast.success("Login Successful! Redirecting to Admin Panel...");
-        navigate("/");
+        navigate("/create-product");
       }
     } catch (error) {
+      console.error(error);
       toast.error("Invalid PIN. Please try again.");
-    }finally{
-      setloading(false)
+    } finally {
+      setloading(false);
     }
   };
 
@@ -64,15 +74,16 @@ const AdminLogin = () => {
 
           {/* Login Button */}
           <button
-  type="submit"
-  className={`w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-md font-semibold transition-all duration-300 ${
-    loading ? "opacity-50 cursor-not-allowed" : "hover:from-blue-500 hover:to-indigo-500"
-  }`}
-  disabled={loading}
->
-  {loading ? "Logging in..." : "Login"}
-</button>
-
+            type="submit"
+            className={`w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-md font-semibold transition-all duration-300 ${
+              loading
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:from-blue-500 hover:to-indigo-500"
+            }`}
+            disabled={loading}
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
       </div>
     </div>

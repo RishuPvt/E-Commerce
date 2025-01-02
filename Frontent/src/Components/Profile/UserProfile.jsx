@@ -6,7 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useEffect } from "react";
-import { useUserContext } from "../../context/Usercontext";
+import axiosinstance from "../axios/axiosinstance";
+
 import { backebdUrl } from "../../Api";
 const UserProfile = () => {
   
@@ -18,7 +19,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosinstance.get(
           `${backebdUrl}/users/current-user`,
           {
             withCredentials: true,
@@ -38,7 +39,7 @@ const UserProfile = () => {
 
     const fetchorder = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosinstance.get(
           `${backebdUrl}/order/getOrderHistory`,
           { withCredentials: true }
         );
@@ -64,7 +65,7 @@ const UserProfile = () => {
     setLoading(false);
 
     try {
-      const response = await axios.post(
+      const response = await axiosinstance.post(
         `${backebdUrl}/users/logout`,
         {},
         {

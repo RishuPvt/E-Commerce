@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { use } from "react";
+import axiosinstance from "../axios/axiosinstance";
 import toast from "react-hot-toast";
 import { backebdUrl } from "../../Api";
 function Chngpassword() {
@@ -29,7 +29,7 @@ function Chngpassword() {
       };
 
       // Send plain JSON data instead of FormData
-      const response = await axios.post(
+      const response = await axiosinstance.post(
         `${backebdUrl}/users/change-password`,
         {
           oldPassword: FormData.oldPassword,

@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useUserContext } from "../../context/Usercontext";
 import { useCartContext } from "../../context/Caetcontext";
 import { backebdUrl } from "../../Api";
+import axiosinstance from "../axios/axiosinstance";
 const ProductCard = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
 
@@ -27,7 +28,7 @@ const ProductCard = ({ product }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
+      const response = await axiosinstance.post(
         `${backebdUrl}/Cart/add-Cart/${userContext.userId}`,
         {
           productId: product._id, // Send the product ID

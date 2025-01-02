@@ -3,6 +3,7 @@ import { useNavigate , NavLink } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { backebdUrl } from "../../Api";
+import axiosinstance from "../axios/axiosinstance";
 function UpdateDetails() {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -33,7 +34,7 @@ function UpdateDetails() {
 
       console.log("final form data send " + formData);
 
-      const response = await axios.patch(
+      const response = await axiosinstance.patch(
         `${backebdUrl}/users/update-account`, // API endpoint for login
         formData,
         config

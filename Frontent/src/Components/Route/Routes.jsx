@@ -14,6 +14,9 @@ import ChnageAvatar from "../ChangeAvatar/ChnageAvatar";
 import ProductApp from "../ProductDetails/ProductPage"
 import PlaceOrder from "../Order/Order"
 import AdminLogin from "../@Admin/Admin";
+import CreateProduct from "../@Admin/CreateProduct";
+import UpdateField from "../@Admin/UpdateProduct/UpdateField";
+import UpdateProductlist from "../@Admin/UpdateProduct/updateproductlist";
 function ProfileRouter() {
   return (
     <Router>
@@ -32,6 +35,10 @@ function ProfileRouter() {
         <Route path="/update-UserAvatar" element={<ChnageAvatar />}  />
         <Route path="/productpage/:id" element={<ProductApp />} />
         <Route path="/order/:amount" element={<PlaceOrder/>} />
+        < Route path="/create-product" element={<CreateProduct/>}/>
+        <Route path="/update-product" element={<UpdateProductlist />} />
+        <Route path="/update-field/:id" element={<UpdateField />} />
+
       </Routes>
     </Router>
   );
