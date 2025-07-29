@@ -43,7 +43,7 @@ function UpdateDetails() {
         toast.success(
           response.data.message || "Account details updated successfully"
         );
-        navigate("/profile"); // Navigate to the dashboard or target page
+        navigate("/profile"); 
       }
     } catch (error) {
       const errorMessage =

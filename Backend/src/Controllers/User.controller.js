@@ -42,7 +42,7 @@ const registerUser = asyncHandler(async (req, res) => {
     phone,
     password,
     address,
-    avatar: avatar.url,
+    avatar: avatar.url ,
     username: username.toLowerCase(),
   });
 
@@ -50,12 +50,11 @@ const registerUser = asyncHandler(async (req, res) => {
     "-password -refreshToken"
   );
 
-  // Check if the user was successfully created
+
   if (!createdUser) {
     throw new ApiError(500, "Something went wrong while registering the user");
   }
 
-  // Return the created user in the response
   return res
     .status(201)
     .json(new ApiResponse(200, "User registered Successfully", createdUser));

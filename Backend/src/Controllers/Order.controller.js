@@ -90,14 +90,14 @@ const getOrderDetails = asyncHandler(async (req, res) => {
 const cancelOrder = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  // Find the order by ID
+
   const order = await Order.findById(id);
 
   if (!order) {
     throw new ApiError(404, "Order not found");
   }
 
-  // Update the status of the order to "canceled"
+ 
   if (order.orderStatus === "pending") {
     throw new ApiError(
       400,
