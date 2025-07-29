@@ -19,7 +19,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axiosinstance.get(
+        const response = await axios.get(
           `${backebdUrl}/users/current-user`,
           {
             withCredentials: true,
@@ -69,7 +69,7 @@ const UserProfile = () => {
         `${backebdUrl}/users/logout`,
         {},
         {
-          withCredentials: true, // Ensure cookies are sent with the request
+          withCredentials: true, 
         }
       );
       toast.success(response.data.message || "User logout successful!");
