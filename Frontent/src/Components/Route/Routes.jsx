@@ -1,3 +1,4 @@
+// ProfileRouter.jsx
 import React from "react";
 import Load from "../../../Load";
 import UserProfile from "../Profile/UserProfile";
@@ -17,29 +18,33 @@ import AdminLogin from "../@Admin/Admin";
 import CreateProduct from "../@Admin/CreateProduct";
 import UpdateField from "../@Admin/UpdateProduct/UpdateField";
 import UpdateProductlist from "../@Admin/UpdateProduct/updateproductlist";
+// Import the new AuthProvider
+import { AuthProvider } from './AuthContext'; 
+
 function ProfileRouter() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Load />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/Category" element={<CategoryPage />} />
-        <Route path="/Offers" element={<HotOffersPage />} />
-        <Route path="/Admin/" element={<AdminLogin />} />
-        <Route path="/About" element={<AboutUs />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/change-password" element={<Chngpassword />} />
-        <Route path="/update-account" element={<UpdateDetails />} />
-        <Route path="/update-UserAvatar" element={<ChnageAvatar />}  />
-        <Route path="/productpage/:id" element={<ProductApp />} />
-        <Route path="/order/:amount" element={<PlaceOrder/>} />
-        < Route path="/create-product" element={<CreateProduct/>}/>
-        <Route path="/update-product" element={<UpdateProductlist />} />
-        <Route path="/update-field/:id" element={<UpdateField />} />
-
-      </Routes>
+      <AuthProvider> {/* Wrap the Routes with the AuthProvider */}
+        <Routes>
+          <Route path="/" element={<Load />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/Category" element={<CategoryPage />} />
+          <Route path="/Offers" element={<HotOffersPage />} />
+          <Route path="/Admin/" element={<AdminLogin />} />
+          <Route path="/About" element={<AboutUs />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/change-password" element={<Chngpassword />} />
+          <Route path="/update-account" element={<UpdateDetails />} />
+          <Route path="/update-UserAvatar" element={<ChnageAvatar />} />
+          <Route path="/productpage/:id" element={<ProductApp />} />
+          <Route path="/order/:amount" element={<PlaceOrder/>} />
+          <Route path="/create-product" element={<CreateProduct/>}/>
+          <Route path="/update-product" element={<UpdateProductlist />} />
+          <Route path="/update-field/:id" element={<UpdateField />} />
+        </Routes>
+      </AuthProvider>
     </Router>
   );
 }
