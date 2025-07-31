@@ -19,7 +19,7 @@ import CreateProduct from "../@Admin/CreateProduct";
 import UpdateField from "../@Admin/UpdateProduct/UpdateField";
 import UpdateProductlist from "../@Admin/UpdateProduct/updateproductlist";
 // Import the new AuthProvider
-import { AuthProvider } from '../../AuthContex'; 
+import { AuthProvider } from '../AuthContex'; 
 
 function ProfileRouter() {
   return (
